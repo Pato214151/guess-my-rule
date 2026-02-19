@@ -1,6 +1,6 @@
 # Arquitectura MVC - Guess My Rule
 ## Diagrama
-(arquitectura.png)
+[diagrama de arquitectura](arquitectura.png)
 
 ## Descripción de Capas
 ### VISTA (JavaFX)
