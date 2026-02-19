@@ -55,7 +55,7 @@ El proyecto sigue el patrón **MVC (Modelo-Vista-Controlador)**:
 - **Vista:** Interfaces JavaFX 
 - **Controlador:** Intermediario entre Vista y Modelo
 
-Ver [diagrama de arquitectura](design/arquitectura-mvc.md)
+Ver [diagrama de arquitectura](design/arquitectura.md)
 
 ## Gestión del Proyecto
 - **Repositorio:** GitHub
