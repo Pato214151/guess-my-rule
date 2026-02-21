@@ -5,7 +5,7 @@ Juego educativo donde el jugador debe descubrir reglas matemáticas ocultas medi
 **Equipo:** Julian, Gabriel, Valentina
 
 ## Tecnologías
-- Java 21
+- Java 25
 - JavaFX 21
 - Maven
 - MySQL 8
