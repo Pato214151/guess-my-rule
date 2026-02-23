@@ -20,6 +20,8 @@ public class PrimaryController {
     @FXML
     private Button btnRegistrar;
 
+    private boolean aliasConfirmado = false;
+
     @FXML
     public void initialize() {
         btnStart.setDisable(true);
@@ -27,26 +29,32 @@ public class PrimaryController {
 
     aliasField.textProperty().addListener((observable, oldValue, newValue) -> {
         boolean isEmpty = newValue.trim().isEmpty();
-        btnStart.setDisable(isEmpty);
         btnRegistrar.setDisable(isEmpty);
-    });
-}
+
+        aliasConfirmado = false;
+        btnStart.setDisable(true);
+        });
+    }
+
+    @FXML
+    private void handleRegistrar(ActionEvent event) {
+        aliasConfirmado = true;
+        btnStart.setDisable(false);
+        System.out.println("Alias registrado: " + aliasField.getText().trim());
+    }
+
+    @FXML
+    private void handleInvitado(ActionEvent event) {
+        aliasField.setText("Invitado");
+        aliasConfirmado = true;
+        btnStart.setDisable(false);
+        btnRegistrar.setDisable(true);
+    }
 
     @FXML
     private void handleStart(ActionEvent event) throws IOException {
         String alias = aliasField.getText().trim();
         System.out.println("Jugador: " + alias);
         App.setRoot("secondary");
-    }
-
-    @FXML
-    private void handleRegistrar(ActionEvent event) {
-        System.out.println("Registrar alias presionado");
-    }
-
-    @FXML
-    private void handleInvitado(ActionEvent event) {
-        aliasField.setText("Invitado");
-        btnStart.setDisable(false);
     }
 }
