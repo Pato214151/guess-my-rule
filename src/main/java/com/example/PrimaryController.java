@@ -40,7 +40,7 @@ public class PrimaryController {
     private void handleRegistrar(ActionEvent event) {
         aliasConfirmado = true;
         btnStart.setDisable(false);
-        System.out.println("Alias registrado: " + aliasField.getText().trim());
+        System.out.println("Alias ya registrado: " + aliasField.getText().trim());
     }
 
     @FXML

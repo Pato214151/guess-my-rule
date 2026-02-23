@@ -11,7 +11,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.PrimaryController">
 
-    <Label text="Guess My Rule"
+    <Label text="Guess My d"
            style="-fx-font-size: 64px;
                   -fx-text-fill: #333333;">
         <font>
