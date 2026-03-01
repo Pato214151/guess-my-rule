@@ -55,6 +55,10 @@ public class PrimaryController {
     private void handleStart(ActionEvent event) throws IOException {
         String alias = aliasField.getText().trim();
         System.out.println("Jugador: " + alias);
+        try {
         App.setRoot("secondary");
+        } catch (IOException e) {
+        throw new NavigationException("Error al cargar la pantalla de juego", e);
+        }
     }
 }
