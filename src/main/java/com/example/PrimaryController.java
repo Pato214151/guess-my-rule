@@ -4,7 +4,9 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 
 public class PrimaryController {
 
@@ -23,18 +25,36 @@ public class PrimaryController {
     private boolean aliasConfirmado = false;
 
     @FXML
-    public void initialize() {
-        btnStart.setDisable(true);
-        btnRegistrar.setDisable(true);
+    private Label titleLabel;
+
+    @FXML
+public void initialize() {
+    String fontPath = getClass().getResource("/com/example/fonts/SIXTY.TTF").toExternalForm();
+    System.out.println("Path: " + fontPath);
+    Font sixtyFont = Font.loadFont(fontPath, 74);
+    System.out.println("Font SIXTY: " + sixtyFont);
+
+    Font robotoFont = Font.loadFont(
+        getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14
+    );
+
+    if (sixtyFont != null) titleLabel.setFont(sixtyFont);
+    if (robotoFont != null) {
+        btnRegistrar.setFont(robotoFont);
+        btnInvitado.setFont(robotoFont);
+        btnStart.setFont(robotoFont);
+    }
+
+    btnStart.setDisable(true);
+    btnRegistrar.setDisable(true);
 
     aliasField.textProperty().addListener((observable, oldValue, newValue) -> {
         boolean isEmpty = newValue.trim().isEmpty();
         btnRegistrar.setDisable(isEmpty);
-
         aliasConfirmado = false;
         btnStart.setDisable(true);
-        });
-    }
+    });
+}
 
     @FXML
     private void handleRegistrar(ActionEvent event) {
@@ -54,7 +74,8 @@ public class PrimaryController {
     @FXML
     private void handleStart(ActionEvent event) throws IOException {
         String alias = aliasField.getText().trim();
-        System.out.println("Jugador: " + alias);
+        System.out.println(alias);
+
         try {
         App.setRoot("secondary");
         } catch (IOException e) {
