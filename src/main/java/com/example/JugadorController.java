@@ -1,5 +1,6 @@
-// com/example/controller/PrimaryController.java
 package com.example;
+
+import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -21,7 +22,7 @@ public class JugadorController {
         try {
             currentPlayer = jugadorLogica.registerPlayer(aliasField.getText());
             btnStart.setDisable(false);
-            showFeedback("✅ Alias registrado: " + currentPlayer.getAlias());
+            showFeedback("Alias registrado: " + currentPlayer.getAlias());
         } catch (IllegalArgumentException e) {
             showFeedback("⚠️ " + e.getMessage());
         }
@@ -31,19 +32,23 @@ public class JugadorController {
     public void handleInvitado() {
         currentPlayer = jugadorLogica.enterAsGuest();
         btnStart.setDisable(false);
-        showFeedback("👤 Ingresando como Invitado");
+        showFeedback("Ingresando como Invitado");
     }
 
     @FXML
     public void handleStart() {
         if (currentPlayer != null) {
-            // Navegar a la siguiente vista, pasando el modelo
-            System.out.println("Iniciando juego con: " + currentPlayer.getAlias());
-            // App.loadScene("game.fxml", currentPlayer);
+        try {
+            App.setRoot("Menu");
+            } catch (IOException e) {
+            showFeedback("Error al cargar la pantalla");
+            }
         }
     }
 
+    @FXML private Label feedbackLabel; // agrega este campo
+
     private void showFeedback(String message) {
-        titleLabel.setText(message);
+    feedbackLabel.setText(message); // ya no toca titleLabel
     }
 }

@@ -6,12 +6,15 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="20.0"
-      style="-fx-background-color: #f5f5f5;"
+      style="-fx-background-color: #f5f5f5; -fx-font-family: 'Roboto';"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.JugadorController">
 
     <Label fx:id="titleLabel" text="Guess My Rule"
-       style="-fx-text-fill: #616161;"/>
+   style="-fx-font-family: 'SIXTY'; -fx-font-size: 74px; -fx-text-fill: #616161;"/>
+
+<Label fx:id="feedbackLabel" text=""
+   style="-fx-font-family: Roboto; -fx-font-size: 13px; -fx-text-fill: #4caf50;"/>
 
     <TextField fx:id="aliasField"
         promptText="Ingrese su alias"
@@ -30,9 +33,5 @@
     <Button fx:id="btnStart" text="Start" disable="true" onAction="#handleStart"
         style="-fx-background-color: #76fc69; -fx-text-fill: white; -fx-font-size: 14px;
                -fx-padding: 10 30 10 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
-
-
-
-
 
 </VBox>
