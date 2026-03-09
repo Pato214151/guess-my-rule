@@ -1,4 +1,3 @@
-// com/example/model/Player.java
 package com.example;
 
 public class JugadorModel {

@@ -27,11 +27,11 @@
                -fx-padding: 8 20 8 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
     <Button fx:id="btnInvitado" text="Ingresar como Invitado" onAction="#handleInvitado"
-        style="-fx-background-color: #8fc4f0; -fx-text-fill: white; -fx-font-size: 14px;
+        style="-fx-background-color: #5eb1f5; -fx-text-fill: white; -fx-font-size: 14px;
                -fx-padding: 8 20 8 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
     <Button fx:id="btnStart" text="Start" disable="true" onAction="#handleStart"
-        style="-fx-background-color: #76fc69; -fx-text-fill: white; -fx-font-size: 14px;
+        style="-fx-background-color: #5ff751; -fx-text-fill: white; -fx-font-size: 14px;
                -fx-padding: 10 30 10 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
 </VBox>

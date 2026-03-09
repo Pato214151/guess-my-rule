@@ -3,6 +3,7 @@ package com.example;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class JugadorController {
@@ -38,11 +39,15 @@ public class JugadorController {
     @FXML
     public void handleStart() {
         if (currentPlayer != null) {
-        try {
-            App.setRoot("Menu");
+            try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/Menu.fxml"));
+            App.getScene().setRoot(loader.load());
+            MenuController menuCtrl = loader.getController();
+            menuCtrl.setPlayer(currentPlayer);
             } catch (IOException e) {
-            showFeedback("Error al cargar la pantalla");
-            }
+            e.printStackTrace();
+            showFeedback("Error: " + e.getMessage());
+}
         }
     }
 
