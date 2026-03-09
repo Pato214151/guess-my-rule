@@ -6,12 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX App - punto de entrada principal
  */
 public class App extends Application {
 
@@ -20,29 +19,27 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/SIXTY.TTF"), 14);
-    Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
 
         scene = new Scene(loadFXML("PantallaDeCarga"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/view/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static Scene getScene() {
-    return scene;
-}
-
+        return scene;
+    }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

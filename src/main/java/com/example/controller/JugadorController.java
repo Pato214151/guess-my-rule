@@ -1,20 +1,26 @@
-package com.example;
+package com.example.controller;
 
 import java.io.IOException;
 
+import com.example.App;
+import com.example.model.JugadorLogica;
+import com.example.model.JugadorModel;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class JugadorController {
 
     @FXML private Label titleLabel;
+    @FXML private Label feedbackLabel;
     @FXML private TextField aliasField;
     @FXML private Button btnRegistrar;
     @FXML private Button btnInvitado;
     @FXML private Button btnStart;
 
-    // El controller conoce al service, NO hace lógica directamente
     private final JugadorLogica jugadorLogica = new JugadorLogica();
     private JugadorModel currentPlayer;
 
@@ -40,20 +46,18 @@ public class JugadorController {
     public void handleStart() {
         if (currentPlayer != null) {
             try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/Menu.fxml"));
-            App.getScene().setRoot(loader.load());
-            MenuController menuCtrl = loader.getController();
-            menuCtrl.setPlayer(currentPlayer);
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/view/Menu.fxml"));
+                App.getScene().setRoot(loader.load());
+                MenuController menuCtrl = loader.getController();
+                menuCtrl.setPlayer(currentPlayer);
             } catch (IOException e) {
-            e.printStackTrace();
-            showFeedback("Error: " + e.getMessage());
-}
+                e.printStackTrace();
+                showFeedback("Error: " + e.getMessage());
+            }
         }
     }
 
-    @FXML private Label feedbackLabel; // agrega este campo
-
     private void showFeedback(String message) {
-    feedbackLabel.setText(message); // ya no toca titleLabel
+        feedbackLabel.setText(message);
     }
 }

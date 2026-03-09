@@ -1,4 +1,4 @@
-package com.example;
+package com.example.model;
 
 public class JugadorModel {
     private String alias;
@@ -9,7 +9,6 @@ public class JugadorModel {
         this.isGuest = isGuest;
     }
 
-    // Getters y setters
     public String getAlias() { return alias; }
     public void setAlias(String alias) { this.alias = alias; }
     public boolean isGuest() { return isGuest; }
