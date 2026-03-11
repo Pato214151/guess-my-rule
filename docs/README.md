@@ -264,10 +264,3 @@ El bienestar del usuario durante sesiones prolongadas es una prioridad. En lugar
 puede generar un deslumbramiento incómodo, hemos optado por un gris muy suave (#f5f5f5) para el fondo general. Esta pequeña
 pero significativa variación reduce el contraste extremo, beneficiando directamente a personas con fotofobia, migrañas o
 simplemente a quienes utilizan la aplicación en entornos muy iluminados, mitigando la fatiga visual a largo plazo.
-
-### Oportunidades de Mejora: El Próximo Paso
-Como parte de nuestro proceso de mejora continua, hemos identificado que el botón "Start" actual —con su fondo verde
-brillante— presenta un ratio de 2.3:1, lo cual se sitúa por debajo de los estándares deseados para baja visión. Para
-resolverlo, tenemos planificado oscurecer este tono a un verde más profundo (#388e3c) en el próximo sprint. Este ajuste
-técnico es sencillo de implementar y elevará la legibilidad del botón al nivel de excelencia que buscamos para todo el
-ecosistema.
