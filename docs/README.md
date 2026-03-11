@@ -215,14 +215,14 @@ Para que una plataforma sea realmente inclusiva, no basta con que sea funcional;
 ello, hemos alineado el diseño con las Pautas de Accesibilidad para el Contenido Web (WCAG 2.1), centrándonos especialmente
 en garantizar que el contraste visual facilite la lectura sin importar las condiciones visuales del usuario.
 
-*Priorizando la Claridad Visual*
+#####Priorizando la Claridad Visual
 Bajo el estándar de nivel AA, que exige un ratio mínimo de 4.5:1, hemos seleccionado una paleta donde el contenido principal
 no solo cumple, sino que supera las expectativas. Por ejemplo, nuestro texto base en gris oscuro sobre fondo claro alcanza
 un ratio de 9.7:1, ofreciendo una nitidez excepcional. Incluso en elementos dinámicos como los botones en estado hover o los
 títulos decorativos, mantenemos ratios que oscilan entre 4.8:1 y 6.9:1, asegurando que la jerarquía de la información sea
 evidente para cualquier usuario.
 
-*Diseño Inclusivo para el Daltonismo*
+#####Diseño Inclusivo para el Daltonismo
 Somos conscientes de que la percepción del color varía; condiciones como la deuteranomalía afectan a una parte significativa
 de la población. Con esto en mente, la identidad visual del proyecto se apoya firmemente en una gama de azules y grises,
 tonos que son percibidos con consistencia por la mayoría de las personas con daltonismo rojo-verde.
@@ -232,13 +232,13 @@ solo mediante el cambio a verde, sino que está vinculado a un comportamiento f�
 recibe señales claras a través de la interactividad y la luminosidad, no dependiendo exclusivamente de la interpretación
 cromática.
 
-*Cuidado de la Fatiga Visual*
+#####Cuidado de la Fatiga Visual
 El bienestar del usuario durante sesiones prolongadas es una prioridad. En lugar de utilizar un blanco puro (#ffffff), que
 puede generar un deslumbramiento incómodo, hemos optado por un gris muy suave (#f5f5f5) para el fondo general. Esta pequeña
 pero significativa variación reduce el contraste extremo, beneficiando directamente a personas con fotofobia, migrañas o
 simplemente a quienes utilizan la aplicación en entornos muy iluminados, mitigando la fatiga visual a largo plazo.
 
-*Oportunidades de Mejora: El Próximo Paso*
+#####Oportunidades de Mejora: El Próximo Paso
 Como parte de nuestro proceso de mejora continua, hemos identificado que el botón "Start" actual —con su fondo verde
 brillante— presenta un ratio de 2.3:1, lo cual se sitúa por debajo de los estándares deseados para baja visión. Para
 resolverlo, tenemos planificado oscurecer este tono a un verde más profundo (#388e3c) en el próximo sprint. Este ajuste
