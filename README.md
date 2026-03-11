@@ -1,4 +1,4 @@
-# 1. Guess My Rule
+## 1. Guess My Rule
 
 Guess My Rule es una aplicación educativa interactiva cuyo objetivo principal es fortalecer el pensamiento lógico-matemático en los
 estudiantes. El jugador introduce números en el sistema, el cual aplica una regla matemática oculta y devuelve un resultado. A partir de
