@@ -191,6 +191,20 @@ El botón '← Volver' está estilizado como un enlace (fondo transparente, text
 Su evento onAction apunta al método handleVolver() del NivelController, que se encarga de regresar al menú principal conservando el
 estado del jugador activo.
 
+## Flujo de Navegación Entre Pantallas
+Con la incorporación de NivelController y los seis FXMLs de nivel, el flujo completo de navegación de la aplicación quedó definido de la
+siguiente manera:
+•	PantallaDeCarga → Al pulsar 'Start' con jugador válido, JugadorController carga Menu.fxml usando FXMLLoader y le pasa el JugadorModel
+al MenuController mediante setPlayer().
+•	Menu → Al pulsar cualquier botón de nivel (1 al 6), MenuController identifica el número del nivel, carga el FXML correspondiente
+(NivelX.fxml) usando FXMLLoader y le pasa el JugadorModel al NivelController mediante setPlayer().
+•	NivelX → Al pulsar '← Volver', NivelController carga Menu.fxml usando FXMLLoader y le devuelve el JugadorModel al MenuController
+mediante setPlayer(), manteniendo el alias en el encabezado de bienvenida.
+
+En los tres casos de navegación que implican transferencia de datos (jugador), se usa FXMLLoader directamente en lugar de App.setRoot(),
+porque este último no expone el controlador cargado y por tanto no permite invocar setPlayer(). Este patrón es consistente en toda la
+aplicación y garantiza que el objeto JugadorModel viaje correctamente entre pantallas sin pérdida de información.
+
 ## Diseño Visual — Tipografías
 El proyecto utiliza dos tipografías cargadas localmente desde la carpeta de recursos del
 proyecto (/com/example/fonts/), lo que garantiza que la aplicación se vea igual en cualquier
