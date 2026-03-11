@@ -1,6 +1,10 @@
-package com.example;
+package com.example.Controller;
 
 import java.io.IOException;
+
+import com.example.App;
+import com.example.Model.JugadorLogica;
+import com.example.Model.JugadorModel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +18,6 @@ public class JugadorController {
     @FXML private Button btnInvitado;
     @FXML private Button btnStart;
 
-    // El controller conoce al service, NO hace lógica directamente
     private final JugadorLogica jugadorLogica = new JugadorLogica();
     private JugadorModel currentPlayer;
 
@@ -40,14 +43,14 @@ public class JugadorController {
     public void handleStart() {
         if (currentPlayer != null) {
             try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/Menu.fxml"));
-            App.getScene().setRoot(loader.load());
-            MenuController menuCtrl = loader.getController();
-            menuCtrl.setPlayer(currentPlayer);
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/View/Menu.fxml")); // ← solo esto cambia
+                App.getScene().setRoot(loader.load());
+                MenuController menuCtrl = loader.getController();
+                menuCtrl.setPlayer(currentPlayer);
             } catch (IOException e) {
             e.printStackTrace();
             showFeedback("Error: " + e.getMessage());
-}
+            }
         }
     }
 

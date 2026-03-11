@@ -8,7 +8,7 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.MenuController"
+            fx:controller="com.example.Controller.MenuController"
             style="-fx-background-color: #f5f5f5; -fx-font-family: Roboto;">
 
     <top>
@@ -52,9 +52,8 @@
                     style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
                     onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
             <Label text="¿Cómo Jugar?" onMouseClicked="#handleComoJugar"
-       onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"
-       style="-fx-font-size: 14px; -fx-text-fill: #ffb74d; -fx-cursor: hand; -fx-underline: true;"/>
+                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"
+                    style="-fx-font-size: 14px; -fx-text-fill: #ffb74d; -fx-cursor: hand; -fx-underline: true;"/>
         </VBox>
     </center>
-
 </BorderPane>

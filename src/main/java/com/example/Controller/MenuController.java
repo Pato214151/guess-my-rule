@@ -1,6 +1,9 @@
-package com.example;
+package com.example.Controller;
 
 import java.io.IOException;
+
+import com.example.App;
+import com.example.Model.JugadorModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
