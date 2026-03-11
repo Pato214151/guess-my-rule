@@ -190,7 +190,7 @@ los rangos de tamaño utilizados (12 a 20 píxeles) y es una fuente reconocida p
 rendimiento para personas con dislexia leve gracias a la diferenciación clara entre
 caracteres similares como 'b', 'd', 'p' y 'q'.
 
-# Paleta de Colores y Accesibilidad Visual
+### Paleta de Colores y Accesibilidad Visual
 La selección de colores del proyecto no fue arbitraria: se tomaron en cuenta criterios de
 accesibilidad visual para garantizar que la aplicación pueda ser utilizada cómodamente por
 personas con diferentes capacidades visuales, incluyendo baja visión, daltonismo y
@@ -210,7 +210,7 @@ sensibilidad a la luz.
 | ![#ffb74d](https://img.shields.io/badge/-FFB74D-ffb74d) | Enlace '¿Cómo Jugar?'. Naranja cálido que destaca sobre el fondo gris sin ser alarmante. |
 | ![#ffffff](https://img.shields.io/badge/-FFFFFF-ffffff) | Texto sobre botones de color oscuro. Garantiza máximo contraste sobre fondos azules y verdes. |
     
-# Accesibilidad y la Experiencia de Usuario
+### Accesibilidad y la Experiencia de Usuario
 Para que una plataforma sea realmente inclusiva, no basta con que sea funcional; debe ser legible y cómoda para todos. Por
 ello, hemos alineado el diseño con las Pautas de Accesibilidad para el Contenido Web (WCAG 2.1), centrándonos especialmente
 en garantizar que el contraste visual facilite la lectura sin importar las condiciones visuales del usuario.
