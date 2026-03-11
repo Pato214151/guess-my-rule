@@ -1,4 +1,4 @@
-# App.java — Clase Principal y Punto de Entrada
+### App.java — Clase Principal y Punto de Entrada
 App.java es el punto de entrada de toda la aplicación. Extiende la clase javafx.application
 Application, que es la clase base que JavaFX requiere para iniciar cualquier aplicación
 gráfica. El método start(Stage stage) es invocado automáticamente por el framework cuando la
@@ -23,7 +23,7 @@ el prefijo /com/example/View/ con el nombre recibido y la extensión .fxml. Si e
 existe en el classpath, lanza una IOException con un mensaje descriptivo que facilita
 enormemente el debugging durante el desarrollo.
 
-# JugadorModel.java — Entidad del Jugador
+### JugadorModel.java — Entidad del Jugador
 JugadorModel es una clase POJO (Plain Old Java Object) que representa el concepto de
 'jugador' dentro del dominio del problema. En el patrón MVC, las entidades del Modelo son
 objetos de datos que no contienen lógica de negocio compleja: simplemente encapsulan los
@@ -54,7 +54,7 @@ true. No realiza ninguna validación porque no hay datos de entrada del usuario.
 permite que en el futuro se pueda generar un alias aleatorio para invitados modificando
 únicamente este método, sin afectar ningún controlador.
 
-# JugadorController.java — Controlador de la Pantalla de Inicio
+### JugadorController.java — Controlador de la Pantalla de Inicio
 JugadorController gestiona la interacción del usuario con la pantalla PantallaDeCarga.fxml,
 que es la primera pantalla que ve el usuario al iniciar la aplicación. Esta pantalla cumple
 la función de registro e identificación: el jugador puede ingresar un alias personalizado o
@@ -84,7 +84,7 @@ experiencia más fluida. Inicialmente el proyecto usaba titleLabel para los mens
 separó en un feedbackLabel dedicado para mantener la separación de responsabilidades
 visuales.
 
-# MenuController.java — Controlador del Menú Principal
+### MenuController.java — Controlador del Menú Principal
 MenuController gestiona la pantalla Menu.fxml, que muestra los seis niveles disponibles del
 juego y permite al jugador seleccionar con cuál desea comenzar. También es el punto de
 entrada a las instrucciones del juego.
@@ -108,7 +108,7 @@ según sea un Button o un Label. Este enfoque centraliza el código de hover en 
 reutilizables, evitando la duplicación que habría si cada elemento tuviera sus propios
 métodos.
 
-# NavigationException.java — Excepción Personalizada de Navegación
+### NavigationException.java — Excepción Personalizada de Navegación
 NavigationException es una excepción personalizada que extiende RuntimeException. Su
 propósito es envolver y contextualizar los errores que ocurren durante la navegación entre
 pantallas, específicamente las IOException que pueden lanzar FXMLLoader cuando no encuentra
@@ -118,7 +118,7 @@ declararla con throws ni a capturarla en cada punto de uso, lo que mantiene el c
 navegación limpio. Su constructor recibe tanto un mensaje descriptivo como la causa original
 (Throwable cause), lo que preserva la traza completa del error para depuración.
 
-# module-info.java — Declaración del Módulo Java
+### module-info.java — Declaración del Módulo Java
 A partir de Java 9, el sistema de módulos (Project Jigsaw) requiere que las aplicaciones
 declaren explícitamente sus dependencias y qué paquetes exponen al exterior. El archivo
 module-info.java cumple esta función para el módulo com.example.
@@ -130,7 +130,7 @@ al intentar inyectar los campos de los controladores, impidiendo que la aplicaci
 Por eso se abren tanto el paquete raíz (com.example) como el paquete de controladores (com
 example.Controller) al framework de JavaFX.
 
-# pom.xml — Configuración de Maven
+### pom.xml — Configuración de Maven
 El archivo pom.xml (Project Object Model) es la configuración central de Maven y define todo
 lo necesario para compilar, gestionar dependencias y ejecutar el proyecto.
 Las dependencias javafx-controls y javafx-fxml en versión 13 proveen los controles de
@@ -143,7 +143,7 @@ versiones más recientes. El javafx-maven-plugin permite ejecutar la aplicación
 con mvn javafx:run, configurando automáticamente el module-path de JavaFX, que es necesario
 desde Java 11 ya que JavaFX dejó de estar incluido en el JDK estándar.
 
-# PantallaDeCarga.fxml — Pantalla de Inicio
+### PantallaDeCarga.fxml — Pantalla de Inicio
 Esta es la primera pantalla que ve el usuario al iniciar la aplicación. Está construida con
 un VBox (contenedor vertical) que centra todos sus elementos horizontal y verticalmente.
 Contiene el título del juego con la fuente SIXTY a 74px, un Label de retroalimentación
@@ -154,7 +154,7 @@ deshabilitado y solo se activa programáticamente cuando el usuario registra un 
 o elige entrar como invitado. Esta decisión de diseño obliga al usuario a identificarse
 antes de proceder, garantizando que siempre haya un jugador activo en el sistema.
 
-# Menu.fxml — Menú de Selección de Nivel
+### Menu.fxml — Menú de Selección de Nivel
 Esta pantalla usa BorderPane como contenedor raíz, que divide el espacio en cinco regiones:
 top (superior), center (centro), bottom, left y right. La región top contiene un HBox con el
 mensaje de bienvenida personalizado. La región center contiene un VBox con los seis botones
@@ -165,7 +165,7 @@ resaltado al pasar el cursor. El enlace '¿Cómo Jugar?' es técnicamente un Lab
 de hipervínculo (subrayado, color naranja, cursor pointer), ya que JavaFX no tiene un
 componente Hyperlink separado del HBox de controles.
 
-# Diseño Visual — Tipografías
+### Diseño Visual — Tipografías
 El proyecto utiliza dos tipografías cargadas localmente desde la carpeta de recursos del
 proyecto (/com/example/fonts/), lo que garantiza que la aplicación se vea igual en cualquier
 computador, independientemente de las fuentes instaladas en el sistema operativo.
@@ -195,6 +195,16 @@ La selección de colores del proyecto no fue arbitraria: se tomaron en cuenta cr
 accesibilidad visual para garantizar que la aplicación pueda ser utilizada cómodamente por
 personas con diferentes capacidades visuales, incluyendo baja visión, daltonismo y
 sensibilidad a la luz.
+## 🎨 Paleta de Colores
+
+| Uso | Color |
+|-----|-------|
+| Fondo general | ![#f5f5f5](https://img.shields.io/badge/-F5F5F5-f5f5f5) |
+| Botones nivel | ![#64b5f6](https://img.shields.io/badge/-64B5F6-64b5f6) |
+| Hover | ![#1976d2](https://img.shields.io/badge/-1976D2-1976d2) |
+| Header | ![#1565c0](https://img.shields.io/badge/-1565C0-1565c0) |
+| Texto | ![#424242](https://img.shields.io/badge/-424242-424242) |
+| Start | ![#5ff751](https://img.shields.io/badge/-5FF751-5ff751) |
     #f5f5f5 : Fondo general de pantallas. Gris muy claro en lugar de blanco puro para
     reducir la fatiga visual.
     #64b5f6 : Color base de los botones de nivel. Azul claro de Material Design, amigable y
