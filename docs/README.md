@@ -1,4 +1,4 @@
-### App.java — Clase Principal y Punto de Entrada
+## App.java — Clase Principal y Punto de Entrada
 App.java es el punto de entrada de toda la aplicación. Extiende la clase javafx.application
 Application, que es la clase base que JavaFX requiere para iniciar cualquier aplicación
 gráfica. El método start(Stage stage) es invocado automáticamente por el framework cuando la
@@ -23,7 +23,7 @@ el prefijo /com/example/View/ con el nombre recibido y la extensión .fxml. Si e
 existe en el classpath, lanza una IOException con un mensaje descriptivo que facilita
 enormemente el debugging durante el desarrollo.
 
-### JugadorModel.java — Entidad del Jugador
+## JugadorModel.java — Entidad del Jugador
 JugadorModel es una clase POJO (Plain Old Java Object) que representa el concepto de
 'jugador' dentro del dominio del problema. En el patrón MVC, las entidades del Modelo son
 objetos de datos que no contienen lógica de negocio compleja: simplemente encapsulan los
@@ -37,7 +37,7 @@ alias no sea nulo y que no sea una cadena vacía o compuesta solo de espacios. E
 útil para hacer comprobaciones rápidas antes de pasar el objeto a capas que realizarán
 operaciones más costosas, como consultas a la base de datos.
 
-### JugadorLogica.java — Lógica de Negocio del Jugador
+## JugadorLogica.java — Lógica de Negocio del Jugador
 JugadorLogica es la clase que contiene las reglas de negocio relacionadas con el jugador. Su
 existencia como clase separada de JugadorModel y de los controladores responde a un
 principio fundamental del patrón MVC y del diseño orientado a objetos: la separación de
@@ -54,7 +54,7 @@ true. No realiza ninguna validación porque no hay datos de entrada del usuario.
 permite que en el futuro se pueda generar un alias aleatorio para invitados modificando
 únicamente este método, sin afectar ningún controlador.
 
-### JugadorController.java — Controlador de la Pantalla de Inicio
+## JugadorController.java — Controlador de la Pantalla de Inicio
 JugadorController gestiona la interacción del usuario con la pantalla PantallaDeCarga.fxml,
 que es la primera pantalla que ve el usuario al iniciar la aplicación. Esta pantalla cumple
 la función de registro e identificación: el jugador puede ingresar un alias personalizado o
@@ -84,7 +84,7 @@ experiencia más fluida. Inicialmente el proyecto usaba titleLabel para los mens
 separó en un feedbackLabel dedicado para mantener la separación de responsabilidades
 visuales.
 
-### MenuController.java — Controlador del Menú Principal
+## MenuController.java — Controlador del Menú Principal
 MenuController gestiona la pantalla Menu.fxml, que muestra los seis niveles disponibles del
 juego y permite al jugador seleccionar con cuál desea comenzar. También es el punto de
 entrada a las instrucciones del juego.
@@ -108,7 +108,7 @@ según sea un Button o un Label. Este enfoque centraliza el código de hover en 
 reutilizables, evitando la duplicación que habría si cada elemento tuviera sus propios
 métodos.
 
-### NavigationException.java — Excepción Personalizada de Navegación
+## NavigationException.java — Excepción Personalizada de Navegación
 NavigationException es una excepción personalizada que extiende RuntimeException. Su
 propósito es envolver y contextualizar los errores que ocurren durante la navegación entre
 pantallas, específicamente las IOException que pueden lanzar FXMLLoader cuando no encuentra
@@ -118,7 +118,7 @@ declararla con throws ni a capturarla en cada punto de uso, lo que mantiene el c
 navegación limpio. Su constructor recibe tanto un mensaje descriptivo como la causa original
 (Throwable cause), lo que preserva la traza completa del error para depuración.
 
-### module-info.java — Declaración del Módulo Java
+## module-info.java — Declaración del Módulo Java
 A partir de Java 9, el sistema de módulos (Project Jigsaw) requiere que las aplicaciones
 declaren explícitamente sus dependencias y qué paquetes exponen al exterior. El archivo
 module-info.java cumple esta función para el módulo com.example.
@@ -130,7 +130,7 @@ al intentar inyectar los campos de los controladores, impidiendo que la aplicaci
 Por eso se abren tanto el paquete raíz (com.example) como el paquete de controladores (com
 example.Controller) al framework de JavaFX.
 
-### pom.xml — Configuración de Maven
+## pom.xml — Configuración de Maven
 El archivo pom.xml (Project Object Model) es la configuración central de Maven y define todo
 lo necesario para compilar, gestionar dependencias y ejecutar el proyecto.
 Las dependencias javafx-controls y javafx-fxml en versión 13 proveen los controles de
@@ -143,7 +143,7 @@ versiones más recientes. El javafx-maven-plugin permite ejecutar la aplicación
 con mvn javafx:run, configurando automáticamente el module-path de JavaFX, que es necesario
 desde Java 11 ya que JavaFX dejó de estar incluido en el JDK estándar.
 
-### PantallaDeCarga.fxml — Pantalla de Inicio
+## PantallaDeCarga.fxml — Pantalla de Inicio
 Esta es la primera pantalla que ve el usuario al iniciar la aplicación. Está construida con
 un VBox (contenedor vertical) que centra todos sus elementos horizontal y verticalmente.
 Contiene el título del juego con la fuente SIXTY a 74px, un Label de retroalimentación
@@ -154,7 +154,7 @@ deshabilitado y solo se activa programáticamente cuando el usuario registra un 
 o elige entrar como invitado. Esta decisión de diseño obliga al usuario a identificarse
 antes de proceder, garantizando que siempre haya un jugador activo en el sistema.
 
-### Menu.fxml — Menú de Selección de Nivel
+## Menu.fxml — Menú de Selección de Nivel
 Esta pantalla usa BorderPane como contenedor raíz, que divide el espacio en cinco regiones:
 top (superior), center (centro), bottom, left y right. La región top contiene un HBox con el
 mensaje de bienvenida personalizado. La región center contiene un VBox con los seis botones
@@ -165,7 +165,7 @@ resaltado al pasar el cursor. El enlace '¿Cómo Jugar?' es técnicamente un Lab
 de hipervínculo (subrayado, color naranja, cursor pointer), ya que JavaFX no tiene un
 componente Hyperlink separado del HBox de controles.
 
-### Diseño Visual — Tipografías
+## Diseño Visual — Tipografías
 El proyecto utiliza dos tipografías cargadas localmente desde la carpeta de recursos del
 proyecto (/com/example/fonts/), lo que garantiza que la aplicación se vea igual en cualquier
 computador, independientemente de las fuentes instaladas en el sistema operativo.
@@ -190,7 +190,7 @@ los rangos de tamaño utilizados (12 a 20 píxeles) y es una fuente reconocida p
 rendimiento para personas con dislexia leve gracias a la diferenciación clara entre
 caracteres similares como 'b', 'd', 'p' y 'q'.
 
-### Paleta de Colores y Accesibilidad Visual
+## Paleta de Colores y Accesibilidad Visual
 La selección de colores del proyecto no fue arbitraria: se tomaron en cuenta criterios de
 accesibilidad visual para garantizar que la aplicación pueda ser utilizada cómodamente por
 personas con diferentes capacidades visuales, incluyendo baja visión, daltonismo y
@@ -210,19 +210,19 @@ sensibilidad a la luz.
 | ![#ffb74d](https://img.shields.io/badge/-FFB74D-ffb74d) | Enlace '¿Cómo Jugar?'. Naranja cálido que destaca sobre el fondo gris sin ser alarmante. |
 | ![#ffffff](https://img.shields.io/badge/-FFFFFF-ffffff) | Texto sobre botones de color oscuro. Garantiza máximo contraste sobre fondos azules y verdes. |
     
-### Accesibilidad y la Experiencia de Usuario
+## Accesibilidad y la Experiencia de Usuario
 Para que una plataforma sea realmente inclusiva, no basta con que sea funcional; debe ser legible y cómoda para todos. Por
 ello, hemos alineado el diseño con las Pautas de Accesibilidad para el Contenido Web (WCAG 2.1), centrándonos especialmente
 en garantizar que el contraste visual facilite la lectura sin importar las condiciones visuales del usuario.
 
-#####Priorizando la Claridad Visual
+### Priorizando la Claridad Visual
 Bajo el estándar de nivel AA, que exige un ratio mínimo de 4.5:1, hemos seleccionado una paleta donde el contenido principal
 no solo cumple, sino que supera las expectativas. Por ejemplo, nuestro texto base en gris oscuro sobre fondo claro alcanza
 un ratio de 9.7:1, ofreciendo una nitidez excepcional. Incluso en elementos dinámicos como los botones en estado hover o los
 títulos decorativos, mantenemos ratios que oscilan entre 4.8:1 y 6.9:1, asegurando que la jerarquía de la información sea
 evidente para cualquier usuario.
 
-#####Diseño Inclusivo para el Daltonismo
+### Diseño Inclusivo para el Daltonismo
 Somos conscientes de que la percepción del color varía; condiciones como la deuteranomalía afectan a una parte significativa
 de la población. Con esto en mente, la identidad visual del proyecto se apoya firmemente en una gama de azules y grises,
 tonos que son percibidos con consistencia por la mayoría de las personas con daltonismo rojo-verde.
@@ -232,13 +232,13 @@ solo mediante el cambio a verde, sino que está vinculado a un comportamiento f�
 recibe señales claras a través de la interactividad y la luminosidad, no dependiendo exclusivamente de la interpretación
 cromática.
 
-#####Cuidado de la Fatiga Visual
+### Cuidado de la Fatiga Visual
 El bienestar del usuario durante sesiones prolongadas es una prioridad. En lugar de utilizar un blanco puro (#ffffff), que
 puede generar un deslumbramiento incómodo, hemos optado por un gris muy suave (#f5f5f5) para el fondo general. Esta pequeña
 pero significativa variación reduce el contraste extremo, beneficiando directamente a personas con fotofobia, migrañas o
 simplemente a quienes utilizan la aplicación en entornos muy iluminados, mitigando la fatiga visual a largo plazo.
 
-#####Oportunidades de Mejora: El Próximo Paso
+### Oportunidades de Mejora: El Próximo Paso
 Como parte de nuestro proceso de mejora continua, hemos identificado que el botón "Start" actual —con su fondo verde
 brillante— presenta un ratio de 2.3:1, lo cual se sitúa por debajo de los estándares deseados para baja visión. Para
 resolverlo, tenemos planificado oscurecer este tono a un verde más profundo (#388e3c) en el próximo sprint. Este ajuste
