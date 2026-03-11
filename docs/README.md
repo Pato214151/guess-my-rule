@@ -195,32 +195,20 @@ La selección de colores del proyecto no fue arbitraria: se tomaron en cuenta cr
 accesibilidad visual para garantizar que la aplicación pueda ser utilizada cómodamente por
 personas con diferentes capacidades visuales, incluyendo baja visión, daltonismo y
 sensibilidad a la luz.
-## 🎨 Paleta de Colores
 
 | Color | Justificación |
 |-----|-------|
-| ![#f5f5f5](https://img.shields.io/badge/-F5F5F5-f5f5f5) | Fondo general de pantallas. Gris muy claro en lugar de blanco puro para
-    reducir la fatiga visual. |
-| ![#64b5f6](https://img.shields.io/badge/-64B5F6-64b5f6) | Color base de los botones de nivel. Azul claro de Material Design, amigable y
-    no agresivo visualmente. |
-| ![#1976d2](https://img.shields.io/badge/-1976D2-1976d2) | Color de los botones al pasar el cursor (hover). Azul más oscuro que genera
-    suficiente contraste con el fondo. |
-| ![#1565c0](https://img.shields.io/badge/-1565C0-1565c0) | Texto del encabezado de bienvenida. Azul oscuro con alto contraste sobre
-    fondo claro. |
-| ![#e3f2fd](https://img.shields.io/badge/-E3F2FD-e3f2fd) | Fondo del encabezado superior del menú. Azul muy pálido que enmarca la zona
-    de bienvenida sin recargar visualmente. |
-| ![#424242](https://img.shields.io/badge/-424242-424242) | Texto 'Selecciona un Nivel'. Gris oscuro de alta legibilidad, alternativa
-    preferible al negro puro. |
-| ![#616161](https://img.shields.io/badge/-616161-616161) | Color del título principal. Gris medio que es elegante y mantiene buen
-    contraste. |
-| ![#5ff751](https://img.shields.io/badge/-5FF751-5ff751) | Botón Start. Verde brillante que indica acción positiva y disponibilidad para
-    continuar. |
-| ![#4caf50](https://img.shields.io/badge/-4CAF50-4caf50) | Mensajes de retroalimentación positiva (alias registrado). Verde semántico
-    estándar. |
-| ![#ffb74d](https://img.shields.io/badge/-FFB74D-ffb74d) | Enlace '¿Cómo Jugar?'. Naranja cálido que destaca sobre el fondo gris sin ser
-    alarmante. |
-| ![#ffffff](https://img.shields.io/badge/-FFFFFF-ffffff) | Texto sobre botones de color oscuro. Garantiza máximo contraste sobre fondos
-    azules y verdes. |
+| ![#f5f5f5](https://img.shields.io/badge/-F5F5F5-f5f5f5) | Fondo general de pantallas. Gris muy claro en lugar de blanco puro para reducir la fatiga visual. |
+| ![#64b5f6](https://img.shields.io/badge/-64B5F6-64b5f6) | Color base de los botones de nivel. Azul claro de Material Design, amigable y no agresivo visualmente. |
+| ![#1976d2](https://img.shields.io/badge/-1976D2-1976d2) | Color de los botones al pasar el cursor (hover). Azul más oscuro que genera suficiente contraste con el fondo. |
+| ![#1565c0](https://img.shields.io/badge/-1565C0-1565c0) | Texto del encabezado de bienvenida. Azul oscuro con alto contraste sobre fondo claro. |
+| ![#e3f2fd](https://img.shields.io/badge/-E3F2FD-e3f2fd) | Fondo del encabezado superior del menú. Azul muy pálido que enmarca la zona de bienvenida sin recargar visualmente. |
+| ![#424242](https://img.shields.io/badge/-424242-424242) | Texto 'Selecciona un Nivel'. Gris oscuro de alta legibilidad, alternativa preferible al negro puro. |
+| ![#616161](https://img.shields.io/badge/-616161-616161) | Color del título principal. Gris medio que es elegante y mantiene buen contraste. |
+| ![#5ff751](https://img.shields.io/badge/-5FF751-5ff751) | Botón Start. Verde brillante que indica acción positiva y disponibilidad para continuar. |
+| ![#4caf50](https://img.shields.io/badge/-4CAF50-4caf50) | Mensajes de retroalimentación positiva (alias registrado). Verde semántico estándar. |
+| ![#ffb74d](https://img.shields.io/badge/-FFB74D-ffb74d) | Enlace '¿Cómo Jugar?'. Naranja cálido que destaca sobre el fondo gris sin ser alarmante. |
+| ![#ffffff](https://img.shields.io/badge/-FFFFFF-ffffff) | Texto sobre botones de color oscuro. Garantiza máximo contraste sobre fondos azules y verdes. |
     
 # Accesibilidad y la Experiencia de Usuario
 Para que una plataforma sea realmente inclusiva, no basta con que sea funcional; debe ser legible y cómoda para todos. Por
