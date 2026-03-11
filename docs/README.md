@@ -85,28 +85,40 @@ separó en un feedbackLabel dedicado para mantener la separación de responsabil
 visuales.
 
 ## MenuController.java — Controlador del Menú Principal
-MenuController gestiona la pantalla Menu.fxml, que muestra los seis niveles disponibles del
-juego y permite al jugador seleccionar con cuál desea comenzar. También es el punto de
-entrada a las instrucciones del juego.
-El método setPlayer(JugadorModel player) es llamado externamente por JugadorController
-después de cargar el FXML. Recibe el objeto jugador y actualiza el welcomeLabel para mostrar
-un mensaje personalizado de bienvenida con el alias del jugador. Este es el mecanismo
+MenuController gestiona la pantalla Menu.fxml, que muestra los seis niveles disponibles del juego y permite al jugador seleccionar con
+cuál desea comenzar. También es el punto de entrada a las instrucciones del juego.
+El método setPlayer(JugadorModel player) es llamado externamente por JugadorController después de cargar el FXML. Recibe el objeto
+jugador y actualiza el welcomeLabel para mostrar un mensaje personalizado de bienvenida con el alias del jugador. Este es el mecanismo
 estándar para comunicar datos entre pantallas en JavaFX cuando se requiere pasar contexto.
-El método handleNivel() responde a los clics en cualquiera de los seis botones de nivel.
-Actualmente navega directamente a la pantalla Juego.fxml usando App.setRoot(). En una
-versión más completa, recibiría el nivel seleccionado como parámetro (o lo identificaría
-desde el evento) para configurar la partida con la dificultad correspondiente.
-El método handleComoJugar() muestra un Alert de tipo INFORMATION con las instrucciones del
-juego. Se eligió Alert en lugar de una pantalla nueva para mantener al usuario en contexto:
-las instrucciones son una consulta rápida, no una pantalla de navegación. El método
-showAndWait() bloquea la ejecución hasta que el usuario cierra el modal, lo que es el
-comportamiento esperado para un diálogo informativo.
-Los métodos handleHoverOn y handleHoverOff implementan efectos visuales de hover para los
-botones de nivel y el enlace de instrucciones. Utilizan el parámetro MouseEvent para
-identificar qué elemento disparó el evento mediante instanceof, aplicando estilos diferentes
-según sea un Button o un Label. Este enfoque centraliza el código de hover en dos métodos
-reutilizables, evitando la duplicación que habría si cada elemento tuviera sus propios
-métodos.
+El método handleNivel(ActionEvent event) responde a los clics en cualquiera de los seis botones de nivel. A diferencia de una navegación
+genérica, este método identifica dinámicamente cuál botón fue presionado extrayendo el número del texto del botón con
+btn.getText().replace("Nivel ", "").trim(). Con ese número construye la ruta al archivo FXML correspondiente (Nivel1.fxml, Nivel2.fxml,
+etc.) y lo carga usando FXMLLoader directamente, para poder obtener la referencia al NivelController y pasarle el objeto jugador mediante
+nivelCtrl.setPlayer(currentPlayer). Este diseño permite que los seis botones compartan un único método de manejo, eliminando la
+duplicación de código.
+El método handleComoJugar() muestra un Alert de tipo INFORMATION con las instrucciones del juego. Se eligió Alert en lugar de una
+pantalla nueva para mantener al usuario en contexto: las instrucciones son una consulta rápida, no una pantalla de navegación. El método
+showAndWait() bloquea la ejecución hasta que el usuario cierra el modal.
+Los métodos handleHoverOn y handleHoverOff implementan efectos visuales de hover para los botones de nivel y el enlace de instrucciones.
+Utilizan instanceof para identificar si el elemento que disparó el evento es un Button o un Label, aplicando estilos diferentes en cada
+caso. Este enfoque centraliza el código de hover en dos métodos reutilizables.
+
+## NivelController.java — Controlador Compartido de los Niveles
+NivelController es el controlador que se asocia a las seis pantallas de nivel del juego (Nivel1.fxml hasta Nivel6.fxml). Una decisión de
+diseño importante fue que los seis niveles comparten un único controlador, en lugar de tener un controlador diferente para cada nivel.
+Esto es posible porque la estructura y el comportamiento de las pantallas de nivel son idénticos en esta etapa del desarrollo; las
+diferencias de dificultad se implementarán a través de datos y lógica interna, no de controladores distintos.
+La clase mantiene una referencia al JugadorModel mediante el campo currentPlayer y el método setPlayer(JugadorModel player), que es
+invocado por MenuController inmediatamente después de cargar el FXML del nivel. Esta referencia es necesaria para conservar la identidad
+del jugador a lo largo de toda la sesión de juego: sin ella, al volver al menú se perdería el contexto del jugador activo.
+El método handleVolver() implementa la navegación de regreso al menú principal. Al igual que handleStart() en JugadorController, no puede
+usar App.setRoot() porque necesita pasar el objeto jugador al MenuController de destino. Por esto utiliza FXMLLoader directamente: carga
+Menu.fxml, obtiene el MenuController con getController() y llama a setPlayer() pasándole el currentPlayer guardado. De esta forma el menú
+siempre muestra el alias correcto en el encabezado de bienvenida, independientemente de cuántos niveles haya visitado el jugador en la
+sesión.
+El campo nivelLabel está declarado con @FXML como referencia opcional al Label que muestra el número del nivel en pantalla. Aunque
+actualmente no se usa de forma activa en la lógica del controlador, su presencia prepara la clase para iteraciones futuras donde se
+necesite actualizar dinámicamente el título u otros elementos del nivel desde el código Java.
 
 ## NavigationException.java — Excepción Personalizada de Navegación
 NavigationException es una excepción personalizada que extiende RuntimeException. Su
@@ -155,15 +167,29 @@ o elige entrar como invitado. Esta decisión de diseño obliga al usuario a iden
 antes de proceder, garantizando que siempre haya un jugador activo en el sistema.
 
 ## Menu.fxml — Menú de Selección de Nivel
-Esta pantalla usa BorderPane como contenedor raíz, que divide el espacio en cinco regiones:
-top (superior), center (centro), bottom, left y right. La región top contiene un HBox con el
-mensaje de bienvenida personalizado. La región center contiene un VBox con los seis botones
-de nivel y el enlace de instrucciones.
-Cada botón de nivel tiene configurados los eventos onMouseEntered y onMouseExited apuntando
-a los métodos handleHoverOn y handleHoverOff del controlador, implementando el efecto de
-resaltado al pasar el cursor. El enlace '¿Cómo Jugar?' es técnicamente un Label con estilo
-de hipervínculo (subrayado, color naranja, cursor pointer), ya que JavaFX no tiene un
-componente Hyperlink separado del HBox de controles.
+Esta pantalla usa BorderPane como contenedor raíz, que divide el espacio en cinco regiones: top, center, bottom, left y right. La región
+top contiene un HBox con el mensaje de bienvenida personalizado con el alias del jugador. La región center contiene un VBox con los seis
+botones de nivel y el enlace de instrucciones.
+Cada uno de los seis botones de nivel comparte el mismo color de fondo (#64b5f6, azul claro) y los mismos manejadores de eventos:
+onAction apunta a handleNivel, y onMouseEntered y onMouseExited apuntan a handleHoverOn y handleHoverOff respectivamente. Al hacer clic
+en cualquiera de ellos, el MenuController extrae el número del texto del botón para determinar a qué pantalla navegar, lo que permite que
+los seis botones sean manejados por un único método sin duplicación de código.
+El enlace '¿Cómo Jugar?' es técnicamente un Label con estilo de hipervínculo (texto subrayado, color naranja #ffb74d, cursor tipo mano).
+El evento onMouseClicked apunta a handleComoJugar, y los eventos de hover cambian el color a un naranja más oscuro (#b44305) al pasar el
+cursor.
+
+## Nivel1.fxml hasta Nivel6.fxml — Pantallas de Juego por Nivel
+Los seis archivos FXML de nivel (Nivel1.fxml, Nivel2.fxml, Nivel3.fxml, Nivel4.fxml, Nivel5.fxml y Nivel6.fxml) comparten exactamente la
+misma estructura, diferenciándose únicamente en el número que muestran en los Labels de título y encabezado. Esta decisión de diseño es
+coherente con el uso de un controlador compartido (NivelController): si la estructura de las pantallas es idéntica, no tiene sentido
+tener controladores diferentes.
+Todas las pantallas de nivel usan BorderPane como contenedor raíz, asociadas al controlador com.example.Controller.NivelController. La
+región top contiene un HBox con fondo azul claro (#e3f2fd) que alberga el botón '← Volver' y un Label con el nombre del nivel. La región
+center contiene un VBox centrado con un Label grande en gris claro (#9e9e9e) que indica el número de nivel, sirviendo como marcador de
+posición para el contenido de juego que se implementará en sprints posteriores.
+El botón '← Volver' está estilizado como un enlace (fondo transparente, texto azul #1565c0, subrayado) en lugar de un botón convencional.
+Su evento onAction apunta al método handleVolver() del NivelController, que se encarga de regresar al menú principal conservando el
+estado del jugador activo.
 
 ## Diseño Visual — Tipografías
 El proyecto utiliza dos tipografías cargadas localmente desde la carpeta de recursos del
@@ -205,9 +231,10 @@ sensibilidad a la luz.
 | ![#e3f2fd](https://img.shields.io/badge/-E3F2FD-e3f2fd) | Fondo del encabezado superior del menú. Azul muy pálido que enmarca la zona de bienvenida sin recargar visualmente. |
 | ![#424242](https://img.shields.io/badge/-424242-424242) | Texto 'Selecciona un Nivel'. Gris oscuro de alta legibilidad, alternativa preferible al negro puro. |
 | ![#616161](https://img.shields.io/badge/-616161-616161) | Color del título principal. Gris medio que es elegante y mantiene buen contraste. |
-| ![#5ff751](https://img.shields.io/badge/-5FF751-5ff751) | Botón Start. Verde brillante que indica acción positiva y disponibilidad para continuar. |
+| ![#4dda40](https://img.shields.io/badge/-4DDA40-4dda40) | Botón Start. Verde equilibrado que indica acción positiva y disponibilidad para continuar. |
 | ![#4caf50](https://img.shields.io/badge/-4CAF50-4caf50) | Mensajes de retroalimentación positiva (alias registrado). Verde semántico estándar. |
 | ![#ffb74d](https://img.shields.io/badge/-FFB74D-ffb74d) | Enlace '¿Cómo Jugar?'. Naranja cálido que destaca sobre el fondo gris sin ser alarmante. |
+| ![#b44305](https://img.shields.io/badge/-B44305-b44305) | Enlace '¿Cómo Jugar?' al pasar el cursor (hover). Naranja oscuro que indica interactividad. |
 | ![#ffffff](https://img.shields.io/badge/-FFFFFF-ffffff) | Texto sobre botones de color oscuro. Garantiza máximo contraste sobre fondos azules y verdes. |
     
 ## Accesibilidad y la Experiencia de Usuario
