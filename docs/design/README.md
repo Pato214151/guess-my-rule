@@ -1,2 +1,3 @@
-# Diseños
-Aquí van los diagramas de clases,base de datos y mockups.
+## Diagrama de Clases
+[Diagrama De Clases GuessMyRule.pdf](https://github.com/user-attachments/files/25919838/Diagrama.De.Clases.GuessMyRule.pdf)
+
