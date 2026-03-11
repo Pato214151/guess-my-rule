@@ -1,8 +1,7 @@
 # Guess My Rule
-Juego educativo donde el jugador debe descubrir reglas matemáticas ocultas mediante pistas y pruebas.
-
-**Proyecto:** Arquitectura MVC - Politécnico Grancolombiano  
-**Equipo:** Julian, Gabriel, Valentina
+Guess My Rule es una aplicación educativa interactiva cuyo objetivo principal es fortalecer el pensamiento lógico-matemático en los estudiantes. El jugador introduce números en el sistema, el cual aplica una regla matemática oculta y devuelve un resultado. A partir de la observación de múltiples entradas y sus respectivas salidas, el jugador debe deducir cuál es esa regla. Por ejemplo, si al ingresar 3 el sistema responde 9, y al ingresar 5 responde 25, la regla podría ser elevar al cuadrado.
+El proyecto fue desarrollado como trabajo grupal para la asignatura de Practica Apicada Sistemas del Politécnico Grancolombiano, siguiendo la metodología ágil Scrum con entregas por cortes. La arquitectura elegida es el patrón Modelo-Vista-Controlador (MVC), que separa claramente las responsabilidades de la aplicación y facilita el mantenimiento y escalabilidad del código.
+La identificación de requerimientos se llevó a cabo mediante observación directa del juego original, revisión de recursos en línea sobre la mecánica del juego y análisis de los objetivos pedagógicos que se desean alcanzar con cada nivel de dificultad.
 
 ## Tecnologías
 - Java 25
