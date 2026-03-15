@@ -191,6 +191,20 @@ El botón '← Volver' está estilizado como un enlace (fondo transparente, text
 Su evento onAction apunta al método handleVolver() del NivelController, que se encarga de regresar al menú principal conservando el
 estado del jugador activo.
 
+## Flujo de Navegación Entre Pantallas
+Con la incorporación de NivelController y los seis FXMLs de nivel, el flujo completo de navegación de la aplicación quedó definido de la
+siguiente manera:
+•	PantallaDeCarga → Al pulsar 'Start' con jugador válido, JugadorController carga Menu.fxml usando FXMLLoader y le pasa el JugadorModel
+al MenuController mediante setPlayer().
+•	Menu → Al pulsar cualquier botón de nivel (1 al 6), MenuController identifica el número del nivel, carga el FXML correspondiente
+(NivelX.fxml) usando FXMLLoader y le pasa el JugadorModel al NivelController mediante setPlayer().
+•	NivelX → Al pulsar '← Volver', NivelController carga Menu.fxml usando FXMLLoader y le devuelve el JugadorModel al MenuController
+mediante setPlayer(), manteniendo el alias en el encabezado de bienvenida.
+
+En los tres casos de navegación que implican transferencia de datos (jugador), se usa FXMLLoader directamente en lugar de App.setRoot(),
+porque este último no expone el controlador cargado y por tanto no permite invocar setPlayer(). Este patrón es consistente en toda la
+aplicación y garantiza que el objeto JugadorModel viaje correctamente entre pantallas sin pérdida de información.
+
 ## Diseño Visual — Tipografías
 El proyecto utiliza dos tipografías cargadas localmente desde la carpeta de recursos del
 proyecto (/com/example/fonts/), lo que garantiza que la aplicación se vea igual en cualquier
@@ -264,3 +278,23 @@ El bienestar del usuario durante sesiones prolongadas es una prioridad. En lugar
 puede generar un deslumbramiento incómodo, hemos optado por un gris muy suave (#f5f5f5) para el fondo general. Esta pequeña
 pero significativa variación reduce el contraste extremo, beneficiando directamente a personas con fotofobia, migrañas o
 simplemente a quienes utilizan la aplicación en entornos muy iluminados, mitigando la fatiga visual a largo plazo.
+
+### Videos y Guias instructivos
+## Como descargar java FX
+Lo que enseña este video es algo que parece trivial pero que le ha costado tiempo a más de uno: hacer que JavaFX funcione en IntelliJ sin morir en el intento. El punto clave que deja claro desde el principio es que JavaFX ya no viene incluido en el JDK, así que si intentas correr un proyecto gráfico sin haberlo configurado antes, simplemente te va a explotar con un error de módulos y no vas a entender por qué. La solución es descargar el SDK de JavaFX por separado desde su página oficial, extraerlo, y luego decirle manualmente a IntelliJ dónde está la carpeta lib dentro de la estructura del proyecto ese es el paso que la mayoría se salta y que hace que todo falle. Una vez hecho eso, el proyecto compila, se abre la ventana de prueba con el "Hello Application" y ya tienes el entorno listo para trabajar. En la práctica, esto te sirve directamente para el proyecto de Adivina mi Regla en JavaFX: antes de tocar una sola línea de código del proyecto grupal, asegúrar de que cada integrante tenga esta configuración hecha en su computador, porque si no, van a perder tiempo valioso en la entrega tratando de correr código que en el computador de uno funciona y en la del otro no.
+Linck:https:https://www.youtube.com/watch?v=FAGENeWdEys
+
+## ¿Qué es MVC? - Aprende MVC en 10 minutos!
+MVC es básicamente una forma de pensar y organizar el código antes de escribir una sola línea. Lo que enseña el video es que cuando construyes una aplicación, siempre vas a tener tres preocupaciones distintas: dónde viven los datos, cómo se ven, y quién toma las decisiones.Y mezclar esas tres cosas en un solo archivo o clase es exactamente lo que hace que los proyectos se vuelvan un caos con el tiempo. Lo más valioso que deja es entender que el Controlador no es magia, es simplemente un intermediario que recibe lo que el usuario hizo, decide qué pedirle a la base de datos, y le manda el resultado a la pantalla. En la práctica, esto lo puedes usar desde hoy mismo: en el proyecto, ya sea en distinta materia o en demas programas 
+uno debe comenzar preguntandose para construir el programa: ¿esto es un dato? va al Model. ¿esto se muestra? va a la View. ¿esto decide qué hacer? va al Controller. Con esa sola pregunta va a estructurar proyecto mucho más limpios, más fáciles de mantener y que cualquier compañero va a poder entender sin que tengas que explicarle todo desde cero.
+Linck:https://www.youtube.com/watch?v=UU8AKk8Slqg
+
+## EL PODER de la ARQUITECTURA MVC + Despliegue de API REST
+Lo que enseña este video va mucho más allá de explicar MVC, y eso es lo que lo hace valioso: te muestra MVC aplicado de verdad, con código real, errores incluidos y decisiones que se toman en el momento. Lo más importante que te deja es entender que separar en capas no es solo cuestión de orden estético, sino que tiene un impacto real y tangible en el proyecto,cuando el profe cambió una sola línea de código, el import del modelo, y toda la API pasó de leer un archivo JSON local a conectarse a MongoDB (MongoDB es una base de datos no relacional (NoSQL) que en lugar de guardar la información en tablas con filas y columnas como MySQL, la guarda en documentos con formato similar a JSON. )  sin tocar ni el controlador ni las rutas. Esa es la magia de MVC bien aplicado: cada capa es una caja negra que cumple un contrato, y el resto del sistema no necesita saber qué hay adentro. También aprendiste que las validaciones no viven en un solo lugar, sino que cada capa tiene las suyas con un propósito distinto.El controlador valida formato y coherencia del input, el modelo valida integridad y reglas de negocio.Y confundir eso es exactamente lo que hace que los proyectos se vuelvan difíciles de mantener. En la práctica, puedes aplicar esto desde ya en tus proyectos de la U creando tres carpetas: models/, controllers/ y routes/, y haciéndote siempre la misma pregunta antes de escribir código: ¿esto recupera o modifica datos? model. ¿Esto decide qué hacer con lo que llegó del usuario?  controller. ¿Esto solo sabe a dónde apuntar la petición? route. Con esa disciplina,el proyecto grupal van a ser infinitamente más fáciles de dividir entre los compañeros, porque cada quien puede trabajar en su capa sin pisarle el trabajo al otro.
+Linck:https://www.youtube.com/watch?v=ev3Yxva4wI4
+
+## Aprende a crear una ARQUITECTURA SOFTWARE desde 0
+Lo que enseña este video es una forma de pensar la arquitectura antes de escribir una sola línea de código, y lo hace con un ejemplo real que cualquiera conoce: Instagram. El punto central es que diseñar una arquitectura no es magia ni algo reservado para ingenieros senior sino es simplemente hacerse la pregunta correcta frente a cada problema: ¿qué componente resuelve esto? Lo más valioso que deja es entender por qué una app con millones de usuarios no puede vivir en un solo servidor o en un monolito, porque si ese único bloque falla, cae todo. La respuesta a eso son los microservicios: cada funcionalidad vive separada, escala sola y falla sola sin arrastrar al resto. También aprendes que entre el usuario y los servicios siempre hay un API Gateway (Un API Gateway es un componente que actúa como puerta de entrada única a tus servicios, manejando seguridad, enrutamiento, control y optimización de las APIs)  que actúa como recepcionista, que los archivos pesados como videos van a un almacenamiento tipo S3, que los metadatos viajan como eventos entre servicios, y que el algoritmo de recomendación es simplemente otro microservicio que procesa interacciones. En la práctica, puedes aplicar esta forma de pensar desde ya el proyecto: antes de codear, dibuja el flujo: quién hace la petición, quién la recibe, qué datos se guardan y dónde, y qué pasa después. Eso es exactamente lo que hace un arquitecto de software, y este video te muestra que la diferencia entre un proyecto bien hecho y uno hecho a las carreras está casi siempre en ese momento previo al código.
+Linck:https://www.youtube.com/watch?v=XQWdcjIBuWI
+
+
