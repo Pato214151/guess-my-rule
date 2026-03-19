@@ -3,10 +3,10 @@ package com.example.Controller;
 import java.io.IOException;
 
 import com.example.App;
+import com.example.Model.GameSession;
 import com.example.Model.JugadorModel;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 public class JugadorController {
@@ -44,19 +44,17 @@ public class JugadorController {
     }
 
     @FXML
-    public void handleStart() {
-        if (currentPlayer != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/example/View/Menu.fxml"));
-                App.getScene().setRoot(loader.load());
-                MenuController menuCtrl = loader.getController();
-                menuCtrl.setPlayer(currentPlayer);
-            } catch (IOException e) {
-                e.printStackTrace();
-                showFeedback("Error: " + e.getMessage());
-            }
+public void handleStart() {
+    if (currentPlayer != null) {
+        try {
+            GameSession.getInstance().setAlias(currentPlayer.getAlias());
+            App.setRoot("MenuSeleccionarNivel");
+        } catch (IOException e) {
+            showFeedback("Error al navegar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+}
 
     private void showFeedback(String message) {
         feedbackLabel.setText(message);
