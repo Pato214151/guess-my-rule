@@ -84,7 +84,7 @@
                    style="-fx-font-size: 13px;
                           -fx-text-fill: #e53935;" />
 
-            <Button text="Creo que sé la regla!"
+            <Button text="I think I know the rule!"
                     onAction="#handleDeclararRegla"
                     style="-fx-background-color: #bbdefb;
                            -fx-text-fill: #1565c0;

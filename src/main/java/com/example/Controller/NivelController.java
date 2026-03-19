@@ -24,12 +24,12 @@ public class NivelController {
 
     private static final String[] TITULOS = {
         "",                               // índice 0 (no se usa)
-        "Nivel 1 - Encuentra la Regla",
-        "Nivel 2 - Encuentra la Regla",
-        "Nivel 3 - Encuentra la Regla",
-        "Nivel 4 - Encuentra la Regla",
-        "Nivel 5 - Encuentra la Regla",
-        "Nivel 6 - Encuentra la Regla"
+        "Nivel 1 - Find the Rule!",
+        "Nivel 2 - Find the Rule!",
+        "Nivel 3 - Find the Rule!",
+        "Nivel 4 - Find the Rule!",
+        "Nivel 5 - Find the Rule!",
+        "Nivel 6 - Find the Rule!"
     };
 
     @FXML
@@ -66,7 +66,7 @@ public class NivelController {
         labelFeedback.setText("");
 
         if (texto.isEmpty()) {
-            labelFeedback.setText("Solo se peSrmiten números.");
+            labelFeedback.setText("Solo se permiten números.");
             return;
         }
 
@@ -83,7 +83,7 @@ public class NivelController {
             inputNumero.requestFocus();
 
         } catch (NumberFormatException e) {
-            labelFeedback.setText("⚠️ Solo se permiten números.");
+            labelFeedback.setText("Solo se permiten números.");
         }
     }
 
