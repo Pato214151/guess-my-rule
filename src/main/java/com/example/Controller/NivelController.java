@@ -1,7 +1,9 @@
 package com.example.Controller;
 
 import com.example.App;
-import com.example.Model.GameSession;
+import com.example.GameSession;
+import com.example.Model.ReglaModel;
+import com.example.Model.ReglaModel.ParInOut;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,20 +12,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+
 public class NivelController {
 
-    @FXML private Label     labelTitulo;
+    @FXML private Label labelTitulo;
     @FXML private TextField inputNumero;
     @FXML private TableView<ParInOut> tablaInOut;
     @FXML private TableColumn<ParInOut, String> colIn;
     @FXML private TableColumn<ParInOut, String> colOut;
-    @FXML private Label     labelFeedback;
+    @FXML private Label labelFeedback;
 
-    private int nivel;
+    private ReglaModel regla;
     private final ObservableList<ParInOut> filas = FXCollections.observableArrayList();
 
     private static final String[] TITULOS = {
-        "",                               // índice 0 (no se usa)
+        "",
         "Nivel 1 - Find the Rule!",
         "Nivel 2 - Find the Rule!",
         "Nivel 3 - Find the Rule!",
@@ -34,30 +37,20 @@ public class NivelController {
 
     @FXML
     public void initialize() {
-        nivel = GameSession.getInstance().getNivel();
+        int nivel = GameSession.getInstance().getNivel();
+        regla = new ReglaModel(nivel);
 
         labelTitulo.setText(TITULOS[nivel]);
 
         colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
         colOut.setCellValueFactory(new PropertyValueFactory<>("salida"));
         tablaInOut.setItems(filas);
-        tablaInOut.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tablaInOut.setColumnResizePolicy(
+            TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         inputNumero.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("ENTER")) handleGo();
         });
-    }
-
-    private double aplicarRegla(double x) {
-        return switch (nivel) {
-            case 1 -> x + 3;
-            case 2 -> x * 2;
-            case 3 -> x * 2 + 1;
-            case 4 -> x * x;
-            case 5 -> x * x + x;
-            case 6 -> x * x * x - x;
-            default -> x;
-        };
     }
 
     @FXML
@@ -72,13 +65,7 @@ public class NivelController {
 
         try {
             double entrada = Double.parseDouble(texto);
-            double salida  = aplicarRegla(entrada);
-
-            // Formatear: mostrar entero si es exacto
-            String entradaStr = formatear(entrada);
-            String salidaStr  = formatear(salida);
-
-            filas.add(new ParInOut(entradaStr, salidaStr));
+            filas.add(regla.evaluar(entrada));  // el modelo hace todo
             inputNumero.clear();
             inputNumero.requestFocus();
 
@@ -89,31 +76,11 @@ public class NivelController {
 
     @FXML
     public void handleDeclararRegla() throws IOException {
-        GameSession.getInstance().setNivel(nivel);
-        App.setRoot("DeclararRegla");   // próxima pantalla a construir
+        App.setRoot("DeclararRegla");
     }
 
     @FXML
     public void handleVolver() throws IOException {
         App.setRoot("MenuSeleccionarNivel");
-    }
-
-    private String formatear(double v) {
-        return (v == Math.floor(v) && !Double.isInfinite(v))
-               ? String.valueOf((long) v)
-               : String.valueOf(v);
-    }
-
-    public static class ParInOut {
-        private final String entrada;
-        private final String salida;
-
-        public ParInOut(String entrada, String salida) {
-            this.entrada = entrada;
-            this.salida  = salida;
-        }
-
-        public String getEntrada() { return entrada; }
-        public String getSalida()  { return salida;  }
     }
 }

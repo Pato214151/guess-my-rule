@@ -3,7 +3,7 @@ package com.example.Controller;
 import java.io.IOException;
 
 import com.example.App;
-import com.example.Model.GameSession;
+import com.example.GameSession;
 import com.example.Model.JugadorModel;
 
 import javafx.fxml.FXML;

@@ -1,7 +1,7 @@
 package com.example.Controller;
 
 import com.example.App;
-import com.example.Model.GameSession;
+import com.example.GameSession;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
