@@ -2,6 +2,8 @@ module com.example {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.sql;
+    requires com.mysql.cj;
 
     opens com.example to javafx.fxml;
     opens com.example.controller to javafx.fxml;
@@ -11,4 +13,5 @@ module com.example {
     exports com.example.controller;
     exports com.example.model;
     exports com.example.exception;
+    exports com.example.util;
 }
