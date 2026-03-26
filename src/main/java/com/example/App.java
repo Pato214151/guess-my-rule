@@ -9,9 +9,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * JavaFX App - punto de entrada principal
- */
 public class App extends Application {
 
     private static Scene scene;
@@ -31,7 +28,13 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/view/" + fxml + ".fxml"));
+        var resource = App.class.getResource("/com/example/View/" + fxml + ".fxml");
+
+        if (resource == null) {
+            throw new IOException("FXML no encontrado: /com/example/View/" + fxml + ".fxml");
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(resource);
         return fxmlLoader.load();
     }
 
