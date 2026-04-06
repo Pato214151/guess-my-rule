@@ -8,10 +8,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import com.example.util.DataBaseConnection;
 
 public class App extends Application {
 
@@ -22,12 +18,6 @@ public class App extends Application {
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/SIXTY.TTF"), 14);
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
 
-         // Prueba de conexión
-    try (Connection con = DataBaseConnection.obtenerConexion()) {
-        System.out.println("Conexión exitosa: " + con.getMetaData().getURL());
-    } catch (SQLException e) {
-        System.err.println("Error de conexión: " + e.getMessage());
-    }
 
     scene = new Scene(loadFXML("PantallaDeCarga"), 640, 480);
     stage.setScene(scene);
