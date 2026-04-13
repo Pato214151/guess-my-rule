@@ -23,11 +23,13 @@ public void handleVolver() throws IOException {
     @FXML private Label welcomeLabel;
 
     @FXML
-    public void initialize() {
-        if (welcomeLabel != null) {
-            welcomeLabel.setText("Bienvenido, " + GameSession.getInstance().getAlias());
-        }
+public void initialize() {
+    if (welcomeLabel != null) {
+        // Accedemos al alias a través del objeto jugador
+        String nombre = GameSession.getInstance().getJugador().getAlias();
+        welcomeLabel.setText("Bienvenido, " + nombre);
     }
+}
 
     @FXML
     public void handleNivel(ActionEvent event) throws IOException {

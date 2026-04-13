@@ -43,11 +43,15 @@ public class JugadorController {
         showFeedback("Ingresando como Invitado");
     }
 
-    @FXML
+@FXML
 public void handleStart() {
     if (currentPlayer != null) {
         try {
-            GameSession.getInstance().setAlias(currentPlayer.getAlias());
+            // ERROR ANTERIOR: GameSession.getInstance().setAlias(currentPlayer.getAlias());
+            
+            // SOLUCIÓN: Pasamos el objeto completo a la sesión
+            GameSession.getInstance().setJugador(currentPlayer); 
+            
             App.setRoot("MenuSeleccionarNivel");
         } catch (IOException e) {
             showFeedback("Error al navegar: " + e.getMessage());
