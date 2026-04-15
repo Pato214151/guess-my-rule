@@ -21,11 +21,9 @@ CREATE TABLE puntajes (
     CONSTRAINT chk_tiempo_positivo CHECK (tiempo_segundos > 0)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- Índices para consultas rápidas de ranking
 CREATE INDEX idx_puntos_desc ON puntajes (puntos);
 CREATE INDEX idx_fecha ON puntajes (fecha_registro);
 
--- GMR1-127: Insertar datos de prueba
 INSERT INTO puntajes (nombre_jugador, puntos, nivel, intentos, tiempo_segundos)
 VALUES
 ('JuanGamer', 150, 3, 5, 120),

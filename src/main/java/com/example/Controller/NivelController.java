@@ -50,6 +50,12 @@ public class NivelController {
 
         inputNumero.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("ENTER")) handleGo();
+
+            ObservableList<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
+if (!guardadas.isEmpty()) {
+    filas.addAll(guardadas);
+    GameSession.getInstance().setFilasGuardadas(FXCollections.observableArrayList());
+}
         });
     }
 
@@ -74,10 +80,15 @@ public class NivelController {
         }
     }
 
-    @FXML
-    public void handleDeclararRegla() throws IOException {
-        App.setRoot("DeclararRegla");
+   @FXML
+public void handleDeclararRegla() {
+    GameSession.getInstance().setFilasGuardadas(filas);
+    try {
+        App.setRoot("TestYourRule");
+    } catch (IOException e) {
+        labelFeedback.setText("Error al navegar: " + e.getMessage());
     }
+}
 
     @FXML
     public void handleVolver() throws IOException {

@@ -21,8 +21,8 @@ public class ResultadoNivelController {
         GameSession session = GameSession.getInstance();
 
         int nivel   = session.getNivel();
-        int puntaje = session.getPuntaje();
-        int seg     = session.getSegundos();
+        int puntaje = session.getIntentos(); // o el cálculo que usen para puntos
+int seg     = session.getTiempo();
         String alias = session.getAlias();
 
         int min = seg / 60;
@@ -35,10 +35,10 @@ public class ResultadoNivelController {
         boolean guardado = PuntajeModel.guardarPuntaje(alias, nivel, puntaje);
         if (guardado) {
             labelEstado.setStyle("-fx-text-fill: #1b5e20; -fx-font-size: 14px;");
-            labelEstado.setText("✔ Puntaje guardado en la base de datos.");
+            labelEstado.setText("Puntaje guardado en la base de datos.");
         } else {
             labelEstado.setStyle("-fx-text-fill: #e65100; -fx-font-size: 14px;");
-            labelEstado.setText("⚠ No se pudo guardar el puntaje (sin conexión a BD).");
+            labelEstado.setText("No se pudo guardar el puntaje (sin conexión a BD).");
         }
     }
 

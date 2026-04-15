@@ -1,4 +1,3 @@
--- GMR1-78: Pruebas del script en MySQL Workbench
 -- Ejecutar DESPUÉS de schema.sql
 USE guessrule;
 
