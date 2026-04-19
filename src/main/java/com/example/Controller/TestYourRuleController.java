@@ -10,11 +10,14 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Duration;
+import javafx.util.converter.DefaultStringConverter;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class TestYourRuleController {
 
@@ -28,12 +31,10 @@ public class TestYourRuleController {
 
     private ReglaModel regla;
     private ObservableList<FilaTestModel> filas;
-
     private Timeline cronometro;
-    private int segundos;
-    private int intentos;
-
-    private static final double[] ENTRADAS_FIJAS = {2, 5, 10, 15, 20};
+    private int segundos = 0;
+    private int intentos = 0;
+    private boolean yaVerificado = false;
 
     private static final String[] TITULOS = {
         "", "Nivel 1", "Nivel 2", "Nivel 3",
@@ -46,69 +47,81 @@ public class TestYourRuleController {
         regla = new ReglaModel(nivel);
         labelTitulo.setText(TITULOS[nivel] + " - Test Your Rule");
 
-        // =========================
-        // CONFIGURAR TABLA
-        // =========================
+        // Columna In solo lectura y centrada
         colIn.setCellValueFactory(c -> c.getValue().entradaProperty());
+        colIn.setCellFactory(column -> {
+            TableCell<FilaTestModel, String> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER);
+                        setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
+                    }
+                }
+            };
+            return cell;
+        });
+
+        // Columna Out editable, centrada, con color tras verificar
         colOut.setCellValueFactory(c -> c.getValue().respuestaProperty());
-
         tablaTest.setEditable(true);
-        colOut.setCellFactory(TextFieldTableCell.forTableColumn());
-        colOut.setOnEditCommit(e ->
-            e.getRowValue().setRespuesta(e.getNewValue())
-        );
+        colOut.setEditable(true);
 
-        // 🔥 Colorear SOLO la celda OUT
-        colOut.setCellFactory(column -> new TableCell<>() {
+        colOut.setCellFactory(column -> new TextFieldTableCell<FilaTestModel, String>(new DefaultStringConverter()) {
             @Override
-            protected void updateItem(String item, boolean empty) {
+            public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
+                setAlignment(Pos.CENTER);
 
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                    setText(null);
-                    setStyle("");
+                if (empty || item == null || getTableRow() == null || getTableRow().getItem() == null) {
+                    setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
                     return;
                 }
 
-                setText(item);
+                if (!yaVerificado || item.isEmpty()) {
+                    setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
+                    return;
+                }
 
                 FilaTestModel fila = getTableRow().getItem();
-
                 try {
-                    double resp = Double.parseDouble(item);
-                    double esperado = fila.getSalidaEsperada();
-
-                    if (Math.abs(resp - esperado) < 0.001) {
-                        setStyle("-fx-background-color: #a5d6a7;"); // verde
+                    double resp = Double.parseDouble(item.trim());
+                    if (Math.abs(resp - fila.getSalidaEsperada()) >= 0.01) {
+                        setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #a5d6a7;");
                     } else {
-                        setStyle("-fx-background-color: #ef9a9a;"); // rojo
+                        setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #ef9a9a;");
                     }
-                } catch (Exception e) {
-                    setStyle("-fx-background-color: #ef9a9a;");
+                } catch (NumberFormatException e) {
+                    setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #ef9a9a;");
                 }
             }
+        });
+
+        colOut.setOnEditCommit(e -> {
+            e.getRowValue().setRespuesta(e.getNewValue());
+            tablaTest.refresh();
         });
 
         tablaTest.setColumnResizePolicy(
             TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // =========================
-        // PERSISTENCIA
-        // =========================
+        // Persistencia
         if (GameSession.getInstance().getFilasTest() != null) {
             filas = GameSession.getInstance().getFilasTest();
             segundos = GameSession.getInstance().getTiempo();
             intentos = GameSession.getInstance().getIntentos();
         } else {
             filas = FXCollections.observableArrayList();
-
-            for (double entrada : ENTRADAS_FIJAS) {
-                double salida = regla.aplicarRegla(entrada);
-
-                // 👇 NO mostramos la salida
+            Random random = new Random();
+            for (int i = 0; i < 5; i++) {
+                double entrada = random.nextInt(20) + 1;
+                double salida  = regla.aplicarRegla(entrada);
                 filas.add(new FilaTestModel(entrada, "", salida));
             }
-
             segundos = 0;
             intentos = 0;
         }
@@ -133,43 +146,47 @@ public class TestYourRuleController {
     public void handleCheck() {
         intentos++;
         labelIntentos.setText(String.valueOf(intentos));
+        labelFeedback.setText("");
 
         boolean todosCorrecto = true;
 
         for (FilaTestModel fila : filas) {
+            String respuestaTexto = fila.getRespuesta().trim();
             try {
-                double resp = Double.parseDouble(fila.getRespuesta());
-                double esperado = fila.getSalidaEsperada();
-
-                if (Math.abs(resp - esperado) >= 0.001) {
+                double resp = Double.parseDouble(respuestaTexto);
+                if (Math.abs(resp - fila.getSalidaEsperada()) >= 0.001) {
                     todosCorrecto = false;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 todosCorrecto = false;
             }
         }
 
+        yaVerificado = true;
         tablaTest.refresh();
 
         if (todosCorrecto) {
             cronometro.stop();
 
-            int puntaje = Math.max(0, 1000 - (segundos * 5) - (intentos * 50));
-
+            int puntajeCalculado = Math.max(0, 1000 - (segundos * 5) - (intentos * 50));
             GameSession session = GameSession.getInstance();
-            session.setPuntaje(puntaje);
+            session.setPuntaje(puntajeCalculado);
             session.setTiempo(segundos);
             session.setIntentos(intentos);
-            session.setFilasTest(filas);
+            session.setFilasTest(null);
 
-            labelFeedback.setStyle("-fx-text-fill: green;");
-            labelFeedback.setText("¡Correcto!");
+            labelFeedback.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
+            labelFeedback.setText("Todo correcto!");
 
             try {
-                App.setRoot("Logro");
+                App.setRoot("ResultadoNivel");
             } catch (IOException e) {
-                labelFeedback.setText("Error al navegar");
+                labelFeedback.setText("Error al navegar: " + e.getMessage());
             }
+
+        } else {
+            labelFeedback.setStyle("-fx-font-size: 13px; -fx-text-fill: #e53935;");
+            labelFeedback.setText("Hay respuestas incorrectas. intentanlo de nuevo!");
         }
     }
 
@@ -185,7 +202,7 @@ public class TestYourRuleController {
         try {
             App.setRoot("AprenderLaRegla");
         } catch (IOException e) {
-            labelFeedback.setText("Error al navegar");
+            labelFeedback.setText("Error al navegar: " + e.getMessage());
         }
     }
 }

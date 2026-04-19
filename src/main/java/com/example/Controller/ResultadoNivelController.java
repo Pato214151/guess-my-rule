@@ -21,8 +21,9 @@ public class ResultadoNivelController {
         GameSession session = GameSession.getInstance();
 
         int nivel   = session.getNivel();
-        int puntaje = session.getIntentos(); // o el cálculo que usen para puntos
-int seg     = session.getTiempo();
+        int puntaje = session.getPuntaje(); // corregido
+        int seg     = session.getTiempo();
+        int intentos = session.getIntentos();
         String alias = session.getAlias();
 
         int min = seg / 60;
@@ -32,7 +33,7 @@ int seg     = session.getTiempo();
         labelPuntaje.setText("Puntaje: " + puntaje + " pts");
         labelTiempo.setText(String.format("Tiempo: %02d:%02d", min, s));
 
-        boolean guardado = PuntajeModel.guardarPuntaje(alias, nivel, puntaje);
+        boolean guardado = PuntajeModel.guardarPuntaje(alias, nivel, puntaje, intentos, seg);
         if (guardado) {
             labelEstado.setStyle("-fx-text-fill: #1b5e20; -fx-font-size: 14px;");
             labelEstado.setText("Puntaje guardado en la base de datos.");
@@ -43,12 +44,11 @@ int seg     = session.getTiempo();
     }
 
     @FXML
-    public void handleMenuPrincipal() throws IOException {
-        App.setRoot("MenuSeleccionarNivel");
-    }
-
-    @FXML
-    public void handleVerRanking() throws IOException {
-        App.setRoot("Ranking");
+    public void handleMenuPrincipal() {
+        try {
+            App.setRoot("MenuSeleccionarNivel");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

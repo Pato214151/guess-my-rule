@@ -11,28 +11,36 @@ public class PuntajeModel {
     private final String nombreJugador;
     private final int    nivel;
     private final int    puntaje;
-    private final String fechaHora;
+    private final String fechaRegistro;
 
-    public PuntajeModel(String nombreJugador, int nivel, int puntaje, String fechaHora) {
+    public PuntajeModel(String nombreJugador, int nivel, int puntaje, String fechaRegistro) {
         this.nombreJugador = nombreJugador;
         this.nivel         = nivel;
         this.puntaje       = puntaje;
-        this.fechaHora     = fechaHora;
+        this.fechaRegistro = fechaRegistro;
     }
 
     public String getNombreJugador() { return nombreJugador; }
     public int    getNivel()         { return nivel; }
     public int    getPuntaje()       { return puntaje; }
-    public String getFechaHora()     { return fechaHora; }
+    public String getFechaRegistro() { return fechaRegistro; }
 
-    // ── Guardar puntaje en BD ─────────────────────────────────────────────────
-    public static boolean guardarPuntaje(String alias, int nivel, int puntaje) {
-        String sql = "INSERT INTO puntajes (nombre_jugador, nivel, puntaje) VALUES (?, ?, ?)";
+    // Guardar puntaje con todos los campos requeridos por la BD
+    public static boolean guardarPuntaje(String alias, int nivel, int puntaje, int intentos, int tiempoSegundos) {
+        // La constraint chk_intentos_positivos requiere intentos > 0
+        // La constraint chk_tiempo_positivo requiere tiempo_segundos > 0
+        int intentosSafe = Math.max(1, intentos);
+        int tiempoSafe   = Math.max(1, tiempoSegundos);
+
+        String sql = "INSERT INTO puntajes (nombre_jugador, puntos, nivel, intentos, tiempo_segundos) " +
+                     "VALUES (?, ?, ?, ?, ?)";
         try (Connection con = DataBaseConnection.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, alias);
-            ps.setInt(2, nivel);
-            ps.setInt(3, puntaje);
+            ps.setInt(2, puntaje);
+            ps.setInt(3, nivel);
+            ps.setInt(4, intentosSafe);
+            ps.setInt(5, tiempoSafe);
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -41,16 +49,16 @@ public class PuntajeModel {
         }
     }
 
-    // ── Obtener ranking (todos los niveles o filtrado) ────────────────────────
+    // Obtener ranking global o por nivel
     public static List<PuntajeModel> obtenerRanking(int nivel) {
         List<PuntajeModel> lista = new ArrayList<>();
         String sql;
         if (nivel == 0) {
-            sql = "SELECT nombre_jugador, nivel, puntaje, fecha_hora " +
-                  "FROM puntajes ORDER BY puntaje DESC LIMIT 50";
+            sql = "SELECT nombre_jugador, nivel, puntos, fecha_registro " +
+                  "FROM puntajes ORDER BY puntos DESC LIMIT 50";
         } else {
-            sql = "SELECT nombre_jugador, nivel, puntaje, fecha_hora " +
-                  "FROM puntajes WHERE nivel = ? ORDER BY puntaje DESC LIMIT 50";
+            sql = "SELECT nombre_jugador, nivel, puntos, fecha_registro " +
+                  "FROM puntajes WHERE nivel = ? ORDER BY puntos DESC LIMIT 50";
         }
         try (Connection con = DataBaseConnection.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -60,8 +68,8 @@ public class PuntajeModel {
                 lista.add(new PuntajeModel(
                     rs.getString("nombre_jugador"),
                     rs.getInt("nivel"),
-                    rs.getInt("puntaje"),
-                    rs.getString("fecha_hora")
+                    rs.getInt("puntos"),
+                    rs.getString("fecha_registro")
                 ));
             }
         } catch (SQLException e) {

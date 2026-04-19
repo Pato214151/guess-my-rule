@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.BorderPane?>
@@ -26,42 +29,85 @@
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="15">
-            <padding>
-                <Insets top="30" bottom="30" left="30" right="30"/>
-            </padding>
+        <HBox spacing="30" style="-fx-padding: 30;">
 
-            <Label text="Selecciona un Nivel"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
+            <!-- COLUMNA IZQUIERDA: botones de nivel -->
+            <VBox alignment="CENTER" spacing="15" prefWidth="250">
+                <Label text="Selecciona un Nivel"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #424242;"/>
 
-            <Button text="Nivel 1" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Button text="Nivel 2" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Button text="Nivel 3" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Button text="Nivel 4" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Button text="Nivel 5" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Button text="Nivel 6" onAction="#handleNivel"
-                    prefWidth="200" prefHeight="55"
-                    style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
-                    onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
-            <Label text="¿Cómo Jugar?" onMouseClicked="#handleComoJugar"
-                   onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"
-                   style="-fx-font-size: 14px; -fx-text-fill: #ffb74d; -fx-cursor: hand; -fx-underline: true;"/>
-        </VBox>
+                <Button text="Nivel 1" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Button text="Nivel 2" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Button text="Nivel 3" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Button text="Nivel 4" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Button text="Nivel 5" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Button text="Nivel 6" onAction="#handleNivel"
+                        prefWidth="200" prefHeight="55"
+                        style="-fx-background-color: #64b5f6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10; -fx-cursor: hand;"
+                        onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"/>
+                <Label text="¿Cómo Jugar?" onMouseClicked="#handleComoJugar"
+                       onMouseEntered="#handleHoverOn" onMouseExited="#handleHoverOff"
+                       style="-fx-font-size: 14px; -fx-text-fill: #ffb74d; -fx-cursor: hand; -fx-underline: true;"/>
+            </VBox>
+
+            <!-- COLUMNA DERECHA: ranking -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Ranking Global"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a237e;"/>
+
+                <!-- Filtro + botón actualizar -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Filtrar:"
+                           style="-fx-font-size: 13px; -fx-text-fill: #424242;"/>
+                    <ComboBox fx:id="filtroNivel"
+                              style="-fx-font-size: 13px;"/>
+                    <Button text="🔄 Actualizar"
+                            onAction="#handleActualizarRanking"
+                            style="-fx-background-color: #1a237e;
+                                   -fx-text-fill: white;
+                                   -fx-font-size: 12px;
+                                   -fx-padding: 6 14 6 14;
+                                   -fx-background-radius: 6;
+                                   -fx-cursor: hand;"/>
+                </HBox>
+
+                <!-- Tabla ranking -->
+                <TableView fx:id="tablaRanking"
+                           style="-fx-font-size: 13px;"
+                           VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colJugador"  text="Jugador"  prefWidth="130"/>
+                        <TableColumn fx:id="colNivel"    text="Nivel"    prefWidth="55"/>
+                        <TableColumn fx:id="colPuntaje"  text="Puntaje"  prefWidth="80"/>
+                        <TableColumn fx:id="colFecha"    text="Fecha"    prefWidth="130"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="No hay puntajes aún."
+                               style="-fx-text-fill: #888;"/>
+                    </placeholder>
+                </TableView>
+
+                <Label fx:id="labelEstadoRanking"
+                       text=""
+                       style="-fx-font-size: 12px; -fx-text-fill: #555;"/>
+            </VBox>
+
+        </HBox>
     </center>
 
 </BorderPane>

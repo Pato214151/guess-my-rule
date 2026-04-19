@@ -6,13 +6,23 @@ import java.sql.SQLException;
 
 public class DataBaseConnection {
 
-    private static final String URL      = "jdbc:mysql://localhost:3306/guessrule";
+    private static final String URL      = "jdbc:mysql://localhost:3307/guessrule";
     private static final String USUARIO  = "root";
     private static final String PASSWORD = "";
 
     private DataBaseConnection() {}
 
     public static Connection obtenerConexion() throws SQLException {
-        return DriverManager.getConnection(URL, USUARIO, PASSWORD);
+    try {
+        Connection con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+        return con;
+    } catch (SQLException e) {
+        System.err.println("Error de conexión: " + e.getMessage());
+        System.err.println("SQLState: " + e.getSQLState());
+        System.err.println("ErrorCode: " + e.getErrorCode());
+        throw e;
     }
+}
+
+    
 }
