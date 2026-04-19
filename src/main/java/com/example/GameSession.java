@@ -3,10 +3,13 @@ package com.example;
 import com.example.Model.ReglaModel.ParInOut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import com.example.Model.FilaTestModel;
 
 public class GameSession {
 
     private static GameSession instance;
+
+    private ObservableList<FilaTestModel> filasTest = null;
 
     private String alias   = "Invitado";
     private int    nivel   = 1;
@@ -41,4 +44,13 @@ public void setPuntaje(int puntaje){ this.puntaje = puntaje; }
 
 public ObservableList<ParInOut> getFilasGuardadas() { return filasGuardadas; }
 public void setFilasGuardadas(ObservableList<ParInOut> filas) { this.filasGuardadas = filas; }
+
+
+    public ObservableList<FilaTestModel> getFilasTest() {
+    return filasTest;
+}
+
+public void setFilasTest(ObservableList<FilaTestModel> filasTest) {
+    this.filasTest = filasTest;
+}
 }

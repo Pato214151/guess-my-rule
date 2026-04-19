@@ -35,29 +35,32 @@ public class NivelController {
         "Nivel 6 - Find the Rule!"
     };
 
-    @FXML
-    public void initialize() {
-        int nivel = GameSession.getInstance().getNivel();
-        regla = new ReglaModel(nivel);
+@FXML
+public void initialize() {
+    int nivel = GameSession.getInstance().getNivel();
+    regla = new ReglaModel(nivel);
 
-        labelTitulo.setText(TITULOS[nivel]);
+    labelTitulo.setText(TITULOS[nivel]);
 
-        colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
-        colOut.setCellValueFactory(new PropertyValueFactory<>("salida"));
-        tablaInOut.setItems(filas);
-        tablaInOut.setColumnResizePolicy(
-            TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+    colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
+    colOut.setCellValueFactory(new PropertyValueFactory<>("salida"));
+    tablaInOut.setItems(filas);
+    tablaInOut.setColumnResizePolicy(
+        TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        inputNumero.setOnKeyPressed(e -> {
-            if (e.getCode().toString().equals("ENTER")) handleGo();
-
-            ObservableList<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
-if (!guardadas.isEmpty()) {
-    filas.addAll(guardadas);
-    GameSession.getInstance().setFilasGuardadas(FXCollections.observableArrayList());
-}
-        });
+    // ✅ Cargar datos guardados correctamente
+    ObservableList<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
+    if (!guardadas.isEmpty()) {
+        filas.addAll(guardadas);
+        GameSession.getInstance().setFilasGuardadas(FXCollections.observableArrayList());
     }
+
+    inputNumero.setOnKeyPressed(e -> {
+        if (e.getCode() == javafx.scene.input.KeyCode.ENTER) {
+            handleGo();
+        }
+    });
+}
 
     @FXML
     public void handleGo() {

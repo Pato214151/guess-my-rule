@@ -4,7 +4,6 @@ import com.example.App;
 import com.example.GameSession;
 import com.example.Model.FilaTestModel;
 import com.example.Model.ReglaModel;
-import com.example.Model.ReglaModel.ParInOut;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class TestYourRuleController {
 
@@ -29,10 +27,13 @@ public class TestYourRuleController {
     @FXML private TableColumn<FilaTestModel, String> colOut;
 
     private ReglaModel regla;
-    private final ObservableList<FilaTestModel> filas = FXCollections.observableArrayList();
+    private ObservableList<FilaTestModel> filas;
+
     private Timeline cronometro;
-    private int segundos = 0;
-    private int intentos = 0;
+    private int segundos;
+    private int intentos;
+
+    private static final double[] ENTRADAS_FIJAS = {2, 5, 10, 15, 20};
 
     private static final String[] TITULOS = {
         "", "Nivel 1", "Nivel 2", "Nivel 3",
@@ -45,30 +46,81 @@ public class TestYourRuleController {
         regla = new ReglaModel(nivel);
         labelTitulo.setText(TITULOS[nivel] + " - Test Your Rule");
 
-        // Columna In (solo lectura)
+        // =========================
+        // CONFIGURAR TABLA
+        // =========================
         colIn.setCellValueFactory(c -> c.getValue().entradaProperty());
-
-        // Columna Out editable
         colOut.setCellValueFactory(c -> c.getValue().respuestaProperty());
+
         tablaTest.setEditable(true);
         colOut.setCellFactory(TextFieldTableCell.forTableColumn());
         colOut.setOnEditCommit(e ->
             e.getRowValue().setRespuesta(e.getNewValue())
         );
 
+        // 🔥 Colorear SOLO la celda OUT
+        colOut.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+
+                setText(item);
+
+                FilaTestModel fila = getTableRow().getItem();
+
+                try {
+                    double resp = Double.parseDouble(item);
+                    double esperado = fila.getSalidaEsperada();
+
+                    if (Math.abs(resp - esperado) < 0.001) {
+                        setStyle("-fx-background-color: #a5d6a7;"); // verde
+                    } else {
+                        setStyle("-fx-background-color: #ef9a9a;"); // rojo
+                    }
+                } catch (Exception e) {
+                    setStyle("-fx-background-color: #ef9a9a;");
+                }
+            }
+        });
+
         tablaTest.setColumnResizePolicy(
             TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // Generar 5 entradas aleatorias
-        Random random = new Random();
-        for (int i = 0; i < 5; i++) {
-            double entrada = random.nextInt(20) + 1;
-            double salida  = regla.aplicarRegla(entrada);
-            filas.add(new FilaTestModel(entrada, salida));
-        }
-        tablaTest.setItems(filas);
+        // =========================
+        // PERSISTENCIA
+        // =========================
+        if (GameSession.getInstance().getFilasTest() != null) {
+            filas = GameSession.getInstance().getFilasTest();
+            segundos = GameSession.getInstance().getTiempo();
+            intentos = GameSession.getInstance().getIntentos();
+        } else {
+            filas = FXCollections.observableArrayList();
 
-        // Iniciar cronómetro
+            for (double entrada : ENTRADAS_FIJAS) {
+                double salida = regla.aplicarRegla(entrada);
+
+                // 👇 NO mostramos la salida
+                filas.add(new FilaTestModel(entrada, "", salida));
+            }
+
+            segundos = 0;
+            intentos = 0;
+        }
+
+        tablaTest.setItems(filas);
+        labelIntentos.setText(String.valueOf(intentos));
+        labelTiempo.setText(segundos + " s");
+
+        iniciarCronometro();
+    }
+
+    private void iniciarCronometro() {
         cronometro = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             segundos++;
             labelTiempo.setText(segundos + " s");
@@ -81,81 +133,59 @@ public class TestYourRuleController {
     public void handleCheck() {
         intentos++;
         labelIntentos.setText(String.valueOf(intentos));
-        labelFeedback.setText("");
 
         boolean todosCorrecto = true;
 
         for (FilaTestModel fila : filas) {
-            String respuestaTexto = fila.getRespuesta().trim();
-            boolean correcto = false;
-
             try {
-                double respuestaNum = Double.parseDouble(respuestaTexto);
-                double esperado     = fila.getSalidaEsperada();
-                correcto = Math.abs(respuestaNum - esperado) < 0.001;
-            } catch (NumberFormatException e) {
-                correcto = false;
-            }
+                double resp = Double.parseDouble(fila.getRespuesta());
+                double esperado = fila.getSalidaEsperada();
 
-            // Color verde o rojo en la celda Out
-            int index = filas.indexOf(fila);
-            tablaTest.setRowFactory(tv -> new TableRow<>());
-            if (correcto) {
-                tablaTest.lookupAll(".table-row-cell").forEach(n -> {});
+                if (Math.abs(resp - esperado) >= 0.001) {
+                    todosCorrecto = false;
+                }
+            } catch (Exception e) {
+                todosCorrecto = false;
             }
-
-            fila.setRespuesta(respuestaTexto); // mantener valor
-            todosCorrecto &= correcto;
         }
 
-        // Colorear filas
-        tablaTest.setRowFactory(tv -> new TableRow<FilaTestModel>() {
-            @Override
-            protected void updateItem(FilaTestModel item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setStyle("");
-                } else {
-                    String resp = item.getRespuesta().trim();
-                    boolean ok = false;
-                    try {
-                        ok = Math.abs(Double.parseDouble(resp)
-                             - item.getSalidaEsperada()) < 0.001;
-                    } catch (NumberFormatException ignored) {}
-                    setStyle(ok
-                        ? "-fx-background-color: #a5d6a7;"  // verde
-                        : "-fx-background-color: #ef9a9a;"); // rojo
-                }
-            }
-        });
         tablaTest.refresh();
 
         if (todosCorrecto) {
-    cronometro.stop();
-    
-    // Aquí calculas y guardas el puntaje
-    int puntajeCalculado = Math.max(0, 1000 - (segundos * 5) - (intentos * 50));
-    GameSession.getInstance().setPuntaje(puntajeCalculado);
-    GameSession.getInstance().setTiempo(segundos);
-    GameSession.getInstance().setIntentos(intentos);
-    
-    labelFeedback.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
-    labelFeedback.setText("¡Todo correcto! Guardando puntaje...");
-    try {
-        App.setRoot("Logro");
-    } catch (IOException e) {
-        labelFeedback.setText("Error al navegar: " + e.getMessage());
-    }
-}
+            cronometro.stop();
+
+            int puntaje = Math.max(0, 1000 - (segundos * 5) - (intentos * 50));
+
+            GameSession session = GameSession.getInstance();
+            session.setPuntaje(puntaje);
+            session.setTiempo(segundos);
+            session.setIntentos(intentos);
+            session.setFilasTest(filas);
+
+            labelFeedback.setStyle("-fx-text-fill: green;");
+            labelFeedback.setText("¡Correcto!");
+
+            try {
+                App.setRoot("Logro");
+            } catch (IOException e) {
+                labelFeedback.setText("Error al navegar");
+            }
+        }
     }
 
     @FXML
     public void handleGoBack() {
         cronometro.stop();
+
+        GameSession session = GameSession.getInstance();
+        session.setFilasTest(filas);
+        session.setTiempo(segundos);
+        session.setIntentos(intentos);
+
         try {
             App.setRoot("AprenderLaRegla");
         } catch (IOException e) {
-            labelFeedback.setText("Error al navegar: " + e.getMessage());
+            labelFeedback.setText("Error al navegar");
         }
     }
 }
