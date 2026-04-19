@@ -44,11 +44,14 @@ public class ResultadoNivelController {
     }
 
     @FXML
-    public void handleMenuPrincipal() {
-        try {
-            App.setRoot("MenuSeleccionarNivel");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+public void handleMenuPrincipal() {
+    try {
+        GameSession.getInstance().setFilasGuardadas(
+            javafx.collections.FXCollections.observableArrayList());
+        GameSession.getInstance().setFilasTest(null);
+        App.setRoot("MenuSeleccionarNivel");
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 }
