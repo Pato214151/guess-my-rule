@@ -90,7 +90,7 @@ public class TestYourRuleController {
                 FilaTestModel fila = getTableRow().getItem();
                 try {
                     double resp = Double.parseDouble(item.trim());
-                    if (Math.abs(resp - fila.getSalidaEsperada()) >= 0.01) {
+                    if (Math.abs(resp - fila.getSalidaEsperada()) < 0.01) {
                         setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #a5d6a7;");
                     } else {
                         setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #ef9a9a;");
@@ -102,8 +102,9 @@ public class TestYourRuleController {
         });
 
         colOut.setOnEditCommit(e -> {
-            e.getRowValue().setRespuesta(e.getNewValue());
-            tablaTest.refresh();
+        e.getRowValue().setRespuesta(e.getNewValue());
+        yaVerificado = false;
+        tablaTest.refresh();
         });
 
         tablaTest.setColumnResizePolicy(
