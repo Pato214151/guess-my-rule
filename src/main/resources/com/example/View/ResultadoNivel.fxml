@@ -3,9 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.Controller.ResultadoNivelController"
@@ -14,7 +12,6 @@
     <center>
         <VBox alignment="CENTER" spacing="22" style="-fx-padding: 50;">
 
-            <!-- Trofeo / ícono -->
             <Label text="🏆"
                    style="-fx-font-size: 64px;" />
 
@@ -34,25 +31,14 @@
                    text=""
                    style="-fx-font-size: 14px;" />
 
-            <!-- Botones -->
-            <HBox alignment="CENTER" spacing="16" style="-fx-padding-top: 16;">
-                <Button text="🏠 Menú Principal"
-                        onAction="#handleMenuPrincipal"
-                        style="-fx-background-color: #1a237e;
-                               -fx-text-fill: white;
-                               -fx-font-size: 14px;
-                               -fx-padding: 10 22 10 22;
-                               -fx-background-radius: 6;
-                               -fx-cursor: hand;" />
-                <Button text="🏅 Ver Ranking"
-                        onAction="#handleVerRanking"
-                        style="-fx-background-color: #f57f17;
-                               -fx-text-fill: white;
-                               -fx-font-size: 14px;
-                               -fx-padding: 10 22 10 22;
-                               -fx-background-radius: 6;
-                               -fx-cursor: hand;" />
-            </HBox>
+            <Button text="🏠 Menú Principal"
+                    onAction="#handleMenuPrincipal"
+                    style="-fx-background-color: #1a237e;
+                           -fx-text-fill: white;
+                           -fx-font-size: 14px;
+                           -fx-padding: 10 22 10 22;
+                           -fx-background-radius: 6;
+                           -fx-cursor: hand;" />
         </VBox>
     </center>
 </BorderPane>

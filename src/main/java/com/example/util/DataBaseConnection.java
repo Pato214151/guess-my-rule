@@ -6,9 +6,12 @@ import java.sql.SQLException;
 
 public class DataBaseConnection {
 
-    private static final String URL      = "jdbc:mysql://localhost:3306/guessrule";
+    private static final String PUERTO   = System.getenv("DB_PORT") != null 
+                                           ? System.getenv("DB_PORT") : "3306";
+    private static final String URL      = "jdbc:mysql://localhost:" + PUERTO + "/guessrule";
     private static final String USUARIO  = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = System.getenv("DB_PASS") != null
+                                           ? System.getenv("DB_PASS") : "";
 
     private DataBaseConnection() {}
 
