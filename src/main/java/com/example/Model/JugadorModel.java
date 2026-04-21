@@ -1,5 +1,15 @@
 package com.example.Model;
 
+//Primeramente entender que esta clase es muy local y temporal, es decir, su ciclo de vida muere cuando
+// en la pantalla inicial del juego se da en iniciar, ese dato de "alias" se guarda en la clase GameSession, 
+// y esta clase JugadorModel es solo un contenedor temporal para validar el alias ingresado por el usuario, 
+// y luego se transfiere a GameSession para 
+// su uso durante toda la sesión de juego. Es una clase simple que encapsula la información del jugador, 
+// principalmente su alias y si es un invitado o no
+
+
+
+
 public class JugadorModel {
     private String alias;
     private boolean isGuest;

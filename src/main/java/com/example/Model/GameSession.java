@@ -4,6 +4,19 @@ import com.example.Model.ReglaModel.ParInOut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+// Esta clase es un singleton que mantiene el estado global de la sesión de juego, 
+// como el alias del jugador, el nivel actual, el tiempo transcurrido, los intentos realizados, 
+// el puntaje acumulado, y las filas de datos guardadas para cada nivel. Es una forma de compartir información 
+// entre diferentes controladores sin necesidad de pasar parámetros constantemente, esta clase hace varias cosas
+// 1. le llega el alias desde el controlador jugador que guardo el alias de model y lo asosciioa con una seccion activa, 
+// de ahi en adelante empieza a guardar los datos que el juego va proporcionando como nivel seleccionado, timepo intentos etc..
+
+
+
+
+
+
+
 public class GameSession {
 
     private static GameSession instance;

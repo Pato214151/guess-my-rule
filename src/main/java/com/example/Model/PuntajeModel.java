@@ -2,6 +2,9 @@ package com.example.Model;
 
 import com.example.util.DataBaseConnection;
 
+// Clas eneseialmente encargada de pasar los datos finales de juego a la DATASBASE
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
