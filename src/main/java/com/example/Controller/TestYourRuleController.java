@@ -1,8 +1,8 @@
 package com.example.Controller;
 
 import com.example.App;
-import com.example.GameSession;
 import com.example.Model.FilaTestModel;
+import com.example.Model.GameSession;
 import com.example.Model.ReglaModel;
 
 import javafx.animation.KeyFrame;

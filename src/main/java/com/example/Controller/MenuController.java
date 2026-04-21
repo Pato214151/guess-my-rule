@@ -1,7 +1,7 @@
 package com.example.Controller;
 
 import com.example.App;
-import com.example.GameSession;
+import com.example.Model.GameSession;
 import com.example.Model.PuntajeModel;
 
 import javafx.collections.FXCollections;

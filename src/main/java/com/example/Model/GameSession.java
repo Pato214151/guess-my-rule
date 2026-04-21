@@ -1,6 +1,5 @@
-package com.example;
+package com.example.Model;
 
-import com.example.Model.FilaTestModel;
 import com.example.Model.ReglaModel.ParInOut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
