@@ -2,8 +2,8 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.ReglaModel;
-import com.example.Model.ReglaModel.ParInOut;
+import com.example.Model.AprenderRegla;
+import com.example.Model.AprenderRegla.ParInOut;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,8 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NivelController {
+public class BloqueAprenderRegla {
 
     @FXML private Label labelTitulo;
     @FXML private TextField inputNumero;
@@ -22,7 +24,7 @@ public class NivelController {
     @FXML private TableColumn<ParInOut, String> colOut;
     @FXML private Label labelFeedback;
 
-    private ReglaModel regla;
+    private AprenderRegla regla;
     private final ObservableList<ParInOut> filas = FXCollections.observableArrayList();
 
     private static final String[] TITULOS = {
@@ -30,7 +32,7 @@ public class NivelController {
         "Nivel 1 - Find the Rule!",
         "Nivel 2 - Find the Rule!",
         "Nivel 3 - Find the Rule!",
-        "Nivel 4 - Find the Rule!",
+        "Nivel 4 - Find the Russssle!",
         "Nivel 5 - Find the Rule!",
         "Nivel 6 - Find the Rule!"
     };
@@ -38,7 +40,7 @@ public class NivelController {
 @FXML
 public void initialize() {
     int nivel = GameSession.getInstance().getNivel();
-    regla = new ReglaModel(nivel);
+    regla = new AprenderRegla(nivel);
 
     labelTitulo.setText(TITULOS[nivel]);
 
@@ -49,11 +51,11 @@ public void initialize() {
         TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
     // ✅ Cargar datos guardados correctamente
-    ObservableList<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
-    if (!guardadas.isEmpty()) {
-        filas.addAll(guardadas);
-        GameSession.getInstance().setFilasGuardadas(FXCollections.observableArrayList());
-    }
+List<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
+if (!guardadas.isEmpty()) {
+    filas.addAll(guardadas); // filas es ObservableList, addAll acepta List normal
+    GameSession.getInstance().setFilasGuardadas(new ArrayList<>());
+}
 
     inputNumero.setOnKeyPressed(e -> {
         if (e.getCode() == javafx.scene.input.KeyCode.ENTER) {
@@ -83,11 +85,12 @@ public void initialize() {
         }
     }
 
-   @FXML
+@FXML
 public void handleDeclararRegla() {
-    GameSession.getInstance().setFilasGuardadas(filas);
+    // Conviertes ObservableList → List antes de guardar
+    GameSession.getInstance().setFilasGuardadas(new ArrayList<>(filas));
     try {
-        App.setRoot("TestYourRule");
+        App.setRoot("BloqueDeclararRegla");
     } catch (IOException e) {
         labelFeedback.setText("Error al navegar: " + e.getMessage());
     }

@@ -10,11 +10,11 @@ package com.example.Model;
 
 
 
-public class JugadorModel {
+public class LoginJugador {
     private String alias;
     private boolean isGuest;
 
-    public JugadorModel(String alias, boolean isGuest) {
+    public LoginJugador(String alias, boolean isGuest) {
         this.alias = alias;
         this.isGuest = isGuest;
     }

@@ -3,16 +3,16 @@ package com.example.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class FilaTestModel {
+public class DeclararRegla {
     private final double entradaReal;
     private final double salidaEsperada;
     private final StringProperty entrada;
     private final StringProperty respuesta;
     
-public FilaTestModel(double entradaReal, String respuestaInicial, double salidaEsperada) {
+public DeclararRegla(double entradaReal, String respuestaInicial, double salidaEsperada) {
     this.entradaReal = entradaReal;
     this.salidaEsperada = salidaEsperada;
-    this.entrada = new SimpleStringProperty(ReglaModel.formatear(entradaReal));
+    this.entrada = new SimpleStringProperty(AprenderRegla.formatear(entradaReal));
     this.respuesta = new SimpleStringProperty(respuestaInicial);
 }
     public double getEntradaReal()    { return entradaReal; }

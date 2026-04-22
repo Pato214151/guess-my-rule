@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 
-public class MenuController {
+public class MenuSeleccionarNivel {
 
     @FXML private Label welcomeLabel;
 
@@ -79,7 +79,7 @@ public class MenuController {
     @FXML
     public void handleVolver() {
         try {
-            App.setRoot("PantallaDeCarga");
+            App.setRoot("PantallaLogin");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class MenuController {
             String texto = btn.getText().replace("Nivel ", "").trim();
             int nivel = Integer.parseInt(texto);
             GameSession.getInstance().setNivel(nivel);
-            App.setRoot("AprenderLaRegla");
+            App.setRoot("BloqueAprenderRegla");
         } catch (IOException e) {
             e.printStackTrace();
         }

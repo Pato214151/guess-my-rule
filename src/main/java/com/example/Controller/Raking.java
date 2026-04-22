@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.List;
 
-public class RankingController {
+public class Raking {
 
     @FXML private TableView<PuntajeModel>            tablaRanking;
     @FXML private TableColumn<PuntajeModel, String>  colJugador;

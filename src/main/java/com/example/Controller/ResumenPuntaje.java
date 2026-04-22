@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-public class ResultadoNivelController {
+public class ResumenPuntaje {
 
     @FXML private Label labelMensaje;
     @FXML private Label labelPuntaje;

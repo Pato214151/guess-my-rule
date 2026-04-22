@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.Controller.ResultadoNivelController"
+            fx:controller="com.example.Controller.ResumenPuntaje"
             style="-fx-background-color: #e8f5e9;">
 
     <center>

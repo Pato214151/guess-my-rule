@@ -1,15 +1,18 @@
 package com.example.Controller;
 
+//CONTROLADOR DE LA PANTALLA DE REGISTRO DE JUGADOR,
+//  ES DECIR PANTALLAINICIALXML
+
 import java.io.IOException;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.JugadorModel;
+import com.example.Model.LoginJugador;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class JugadorController {
+public class PantallaLogin {
 
     @FXML private Label titleLabel;
     @FXML private TextField aliasField;
@@ -18,7 +21,7 @@ public class JugadorController {
     @FXML private Button btnStart;
     @FXML private Label feedbackLabel;
 
-    private JugadorModel currentPlayer;
+    private LoginJugador currentPlayer;
 
     @FXML
     public void handleRegistrar() {
@@ -31,14 +34,14 @@ public class JugadorController {
             showFeedback("⚠️ El alias solo puede contener letras y números");
             return;
         }
-        currentPlayer = new JugadorModel(alias.trim(), false);
+        currentPlayer = new LoginJugador(alias.trim(), false);
         btnStart.setDisable(false);
         showFeedback("Alias registrado: " + currentPlayer.getAlias());
     }
 
     @FXML
     public void handleInvitado() {
-        currentPlayer = new JugadorModel("Invitado", true);
+        currentPlayer = new LoginJugador("Invitado", true);
         btnStart.setDisable(false);
         showFeedback("Ingresando como Invitado");
     }

@@ -1,10 +1,10 @@
 package com.example.Model;
 
-public class ReglaModel {
+public class AprenderRegla {
 
     private final int nivel;
 
-    public ReglaModel(int nivel) {
+    public AprenderRegla(int nivel) {
         this.nivel = nivel;
     }
 

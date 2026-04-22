@@ -19,7 +19,7 @@ public class App extends Application {
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
 
 
-    scene = new Scene(loadFXML("PantallaDeCarga"), 640, 480);
+    scene = new Scene(loadFXML("PantallaLogin"), 640, 480);
     stage.setScene(scene);
     stage.show();
 }
