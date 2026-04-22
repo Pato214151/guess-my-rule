@@ -38,3 +38,5 @@ SELECT
     fecha_registro
 FROM puntajes
 ORDER BY puntos DESC;
+USE guessrule;
+TRUNCATE TABLE puntajes;
