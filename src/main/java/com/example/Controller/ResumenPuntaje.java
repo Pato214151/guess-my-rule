@@ -2,7 +2,7 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.PuntajeModel;
+import com.example.Model.PuntajeModelo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -33,7 +33,7 @@ public class ResumenPuntaje {
         labelPuntaje.setText("Puntaje: " + puntaje + " pts");
         labelTiempo.setText(String.format("Tiempo: %02d:%02d", min, s));
 
-        boolean guardado = PuntajeModel.guardarPuntaje(alias, nivel, puntaje, intentos, seg);
+        boolean guardado = PuntajeModelo.guardarPuntaje(alias, nivel, puntaje, intentos, seg);
         if (guardado) {
             labelEstado.setStyle("-fx-text-fill: #1b5e20; -fx-font-size: 14px;");
             labelEstado.setText("Puntaje guardado en la base de datos.");

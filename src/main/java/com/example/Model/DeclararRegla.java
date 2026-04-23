@@ -25,3 +25,4 @@ public DeclararRegla(double entradaReal, String respuestaInicial, double salidaE
     public String getRespuesta() { return respuesta.get(); }
     public void   setRespuesta(String v) { respuesta.set(v); }
 }
+

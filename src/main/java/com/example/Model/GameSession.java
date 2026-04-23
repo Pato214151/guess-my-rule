@@ -1,6 +1,7 @@
 package com.example.Model;
 
 import com.example.Model.AprenderRegla.ParInOut;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class GameSession {
     public static GameSession getInstance() {
         if (instance == null) instance = new GameSession();
         return instance;
-    }
+    } // 
 
     public String getAlias()             { return alias; }
     public void   setAlias(String a)     { this.alias = a; }

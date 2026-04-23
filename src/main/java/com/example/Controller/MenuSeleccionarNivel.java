@@ -2,7 +2,7 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.PuntajeModel;
+import com.example.Model.PuntajeModelo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,11 +20,11 @@ public class MenuSeleccionarNivel {
     @FXML private Label welcomeLabel;
 
     // Ranking
-    @FXML private TableView<PuntajeModel>            tablaRanking;
-    @FXML private TableColumn<PuntajeModel, String>  colJugador;
-    @FXML private TableColumn<PuntajeModel, Integer> colNivel;
-    @FXML private TableColumn<PuntajeModel, Integer> colPuntaje;
-    @FXML private TableColumn<PuntajeModel, String>  colFecha;
+    @FXML private TableView<PuntajeModelo>            tablaRanking;
+    @FXML private TableColumn<PuntajeModelo, String>  colJugador;
+    @FXML private TableColumn<PuntajeModelo, Integer> colNivel;
+    @FXML private TableColumn<PuntajeModelo, Integer> colPuntaje;
+    @FXML private TableColumn<PuntajeModelo, String>  colFecha;
     @FXML private ComboBox<String>                   filtroNivel;
     @FXML private Label                              labelEstadoRanking;
 
@@ -60,8 +60,8 @@ public class MenuSeleccionarNivel {
     }
 
     private void cargarRanking(int nivel) {
-        List<PuntajeModel> datos = PuntajeModel.obtenerRanking(nivel);
-        ObservableList<PuntajeModel> items = FXCollections.observableArrayList(datos);
+        List<PuntajeModelo> datos = PuntajeModelo.obtenerRanking(nivel);
+        ObservableList<PuntajeModelo> items = FXCollections.observableArrayList(datos);
         tablaRanking.setItems(items);
 
         if (datos.isEmpty()) {

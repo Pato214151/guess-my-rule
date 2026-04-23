@@ -9,14 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PuntajeModel {
+public class PuntajeModelo {
 
     private final String nombreJugador;
     private final int    nivel;
     private final int    puntaje;
     private final String fechaRegistro;
 
-    public PuntajeModel(String nombreJugador, int nivel, int puntaje, String fechaRegistro) {
+    public PuntajeModelo(String nombreJugador, int nivel, int puntaje, String fechaRegistro) {
         this.nombreJugador = nombreJugador;
         this.nivel         = nivel;
         this.puntaje       = puntaje;
@@ -53,8 +53,8 @@ public class PuntajeModel {
     }
 
     // Obtener ranking global o por nivel
-    public static List<PuntajeModel> obtenerRanking(int nivel) {
-        List<PuntajeModel> lista = new ArrayList<>();
+    public static List<PuntajeModelo> obtenerRanking(int nivel) {
+        List<PuntajeModelo> lista = new ArrayList<>();
         String sql;
         if (nivel == 0) {
             sql = "SELECT nombre_jugador, nivel, puntos, fecha_registro " +
@@ -68,7 +68,7 @@ public class PuntajeModel {
             if (nivel != 0) ps.setInt(1, nivel);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                lista.add(new PuntajeModel(
+                lista.add(new PuntajeModelo(
                     rs.getString("nombre_jugador"),
                     rs.getInt("nivel"),
                     rs.getInt("puntos"),

@@ -1,10 +1,10 @@
 package com.example.util;
 
-import com.example.Model.PuntajeModel;
+import com.example.Model.PuntajeModelo;
 import java.sql.*;
 import java.util.List;
 
-public class DAOPuntaje implements CRUD<PuntajeModel> {
+public class DAOPuntaje implements CRUD<PuntajeModelo> {
 
     private final Connection conexion;
 
@@ -18,7 +18,7 @@ public class DAOPuntaje implements CRUD<PuntajeModel> {
     this.conexion = temp;
 }
     @Override
-public String create(PuntajeModel p) {
+public String create(PuntajeModelo p) {
     String sql = "INSERT INTO puntajes (nombre_jugador, puntos, nivel, intentos, tiempo_segundos) " +
                  "VALUES (?, ?, ?, ?, ?)";
     try (PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -35,13 +35,13 @@ public String create(PuntajeModel p) {
 }
 
     @Override
-    public <K> PuntajeModel readOne(K id) {
+    public <K> PuntajeModelo readOne(K id) {
         String sql = "SELECT * FROM puntajes WHERE id = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new PuntajeModel(
+                return new PuntajeModelo(
                     rs.getString("nombre_jugador"),
                     rs.getInt("nivel"),
                     rs.getInt("puntos"),
@@ -55,11 +55,11 @@ public String create(PuntajeModel p) {
     }
 
     @Override
-    public List<PuntajeModel> readAll() {
-        return PuntajeModel.obtenerRanking(0);
+    public List<PuntajeModelo> readAll() {
+        return PuntajeModelo.obtenerRanking(0);
     }
 
-    public List<PuntajeModel> obtenerRanking(int nivel) {
-        return PuntajeModel.obtenerRanking(nivel);
+    public List<PuntajeModelo> obtenerRanking(int nivel) {
+        return PuntajeModelo.obtenerRanking(nivel);
     }
 }
