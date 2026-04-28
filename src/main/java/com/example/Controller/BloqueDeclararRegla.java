@@ -32,6 +32,7 @@ public class BloqueDeclararRegla {
     @FXML private TableColumn<FilaTest, String> colOut;
 
     private Regla regla;
+    private GameSession session;          // ← AGREGAR ESTO
     private ObservableList<FilaTest> filas;
     private Timeline cronometro;
     private boolean yaVerificado = false;
@@ -43,11 +44,10 @@ public class BloqueDeclararRegla {
 
     @FXML
     public void initialize() {
-        // ── Obtener regla desde GameSession ───────────────────
-        regla = GameSession.getInstance().getRegla();
+        session = GameSession.getInstance();
+regla = session.getRegla();
         labelTitulo.setText(TITULOS[regla.getNivel()] + " - Test Your Rule");
 
-        // ── Configurar columna In ──────────────────────────────
         colIn.setCellValueFactory(c -> c.getValue().entradaProperty());
         colIn.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -63,7 +63,6 @@ public class BloqueDeclararRegla {
             }
         });
 
-        // ── Configurar columna Out editable ───────────────────
         colOut.setCellValueFactory(c -> c.getValue().respuestaProperty());
         tablaTest.setEditable(true);
         colOut.setEditable(true);
@@ -106,7 +105,6 @@ public class BloqueDeclararRegla {
 
         tablaTest.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // ── Cargar filas: persistencia o nuevas ───────────────
         List<FilaTest> guardadas = GameSession.getInstance().getFilasTest();
         if (guardadas != null) {
             filas = FXCollections.observableArrayList(guardadas);
@@ -122,17 +120,17 @@ public class BloqueDeclararRegla {
 
         tablaTest.setItems(filas);
 
-        // ── Restaurar estado del cronómetro e intentos ────────
-        labelIntentos.setText(String.valueOf(regla.getIntentos()));
-        labelTiempo.setText(regla.getTiempo() + " s");
+        labelIntentos.setText(String.valueOf(session.getIntentos()));
+        labelTiempo.setText(session.getTiempo() + " s");
+
 
         iniciarCronometro();
     }
 
     private void iniciarCronometro() {
         cronometro = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            regla.setTiempo(regla.getTiempo() + 1);
-            labelTiempo.setText(regla.getTiempo() + " s");
+            session.setTiempo(session.getTiempo() + 1);
+labelTiempo.setText(session.getTiempo() + " s");
         }));
         cronometro.setCycleCount(Timeline.INDEFINITE);
         cronometro.play();
@@ -140,8 +138,8 @@ public class BloqueDeclararRegla {
 
     @FXML
     public void handleCheck() {
-        regla.setIntentos(regla.getIntentos() + 1);
-        labelIntentos.setText(String.valueOf(regla.getIntentos()));
+        session.setFilasTest(null);
+labelIntentos.setText(String.valueOf(session.getIntentos()));
         labelFeedback.setText("");
 
         boolean todosCorrecto = true;
@@ -164,7 +162,6 @@ public class BloqueDeclararRegla {
         if (todosCorrecto) {
             cronometro.stop();
 
-            // ── Puntaje se calcula en el modelo ───────────────
             GameSession session = GameSession.getInstance();
             session.setFilasTest(null);
 

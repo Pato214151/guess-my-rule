@@ -20,10 +20,9 @@ public class ResumenPuntaje {
     @FXML
     public void initialize() {
         GameSession session = GameSession.getInstance();
-        Regla regla         = session.getRegla();
+        int seg     = session.getTiempo();
+int puntaje = session.getPuntaje();
 
-        int seg     = regla.getTiempo();
-        int puntaje = regla.calcularPuntaje();
         int min     = seg / 60;
         int s       = seg % 60;
 

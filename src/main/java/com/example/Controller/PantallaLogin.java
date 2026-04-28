@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.LoginJugador;
+import com.example.Model.Jugador;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,7 +18,7 @@ public class PantallaLogin {
     @FXML private Button btnStart;
     @FXML private Label feedbackLabel;
 
-    private LoginJugador currentPlayer;
+    private Jugador currentPlayer;
 
     @FXML
     public void handleRegistrar() {
@@ -31,14 +31,14 @@ public class PantallaLogin {
             showFeedback("⚠️ El alias solo puede contener letras y números");
             return;
         }
-        currentPlayer = new LoginJugador(alias.trim(), false);
+        currentPlayer = new Jugador(alias.trim(), false);
         btnStart.setDisable(false);
         showFeedback("Alias registrado: " + currentPlayer.getAlias());
     }
 
     @FXML
     public void handleInvitado() {
-        currentPlayer = new LoginJugador("Invitado", true);
+        currentPlayer = new Jugador("Invitado", true);
         btnStart.setDisable(false);
         showFeedback("Ingresando como Invitado");
     }
