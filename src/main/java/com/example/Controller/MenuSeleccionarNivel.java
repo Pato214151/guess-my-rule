@@ -2,7 +2,8 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.PuntajeModel;
+import com.example.Model.Puntaje;
+import com.example.util.DAOPuntaje;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,14 +20,13 @@ public class MenuSeleccionarNivel {
 
     @FXML private Label welcomeLabel;
 
-    // Ranking
-    @FXML private TableView<PuntajeModel>            tablaRanking;
-    @FXML private TableColumn<PuntajeModel, String>  colJugador;
-    @FXML private TableColumn<PuntajeModel, Integer> colNivel;
-    @FXML private TableColumn<PuntajeModel, Integer> colPuntaje;
-    @FXML private TableColumn<PuntajeModel, String>  colFecha;
-    @FXML private ComboBox<String>                   filtroNivel;
-    @FXML private Label                              labelEstadoRanking;
+    @FXML private TableView<Puntaje>            tablaRanking;
+    @FXML private TableColumn<Puntaje, String>  colJugador;
+    @FXML private TableColumn<Puntaje, Integer> colNivel;
+    @FXML private TableColumn<Puntaje, Integer> colPuntaje;
+    @FXML private TableColumn<Puntaje, String>  colFecha;
+    @FXML private ComboBox<String>              filtroNivel;
+    @FXML private Label                         labelEstadoRanking;
 
     @FXML
     public void initialize() {
@@ -34,7 +34,6 @@ public class MenuSeleccionarNivel {
             welcomeLabel.setText("Bienvenido, " + GameSession.getInstance().getAlias());
         }
 
-        // Configurar tabla ranking
         colJugador.setCellValueFactory(new PropertyValueFactory<>("nombreJugador"));
         colNivel.setCellValueFactory(new PropertyValueFactory<>("nivel"));
         colPuntaje.setCellValueFactory(new PropertyValueFactory<>("puntaje"));
@@ -43,7 +42,6 @@ public class MenuSeleccionarNivel {
         tablaRanking.setColumnResizePolicy(
             TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // Filtro de nivel
         filtroNivel.setItems(FXCollections.observableArrayList(
             "Todos", "Nivel 1", "Nivel 2", "Nivel 3",
             "Nivel 4", "Nivel 5", "Nivel 6"
@@ -60,8 +58,9 @@ public class MenuSeleccionarNivel {
     }
 
     private void cargarRanking(int nivel) {
-        List<PuntajeModel> datos = PuntajeModel.obtenerRanking(nivel);
-        ObservableList<PuntajeModel> items = FXCollections.observableArrayList(datos);
+        DAOPuntaje dao = new DAOPuntaje();
+        List<Puntaje> datos = dao.obtenerRanking(nivel);
+        ObservableList<Puntaje> items = FXCollections.observableArrayList(datos);
         tablaRanking.setItems(items);
 
         if (datos.isEmpty()) {
@@ -91,7 +90,8 @@ public class MenuSeleccionarNivel {
             Button btn = (Button) event.getSource();
             String texto = btn.getText().replace("Nivel ", "").trim();
             int nivel = Integer.parseInt(texto);
-            GameSession.getInstance().setNivel(nivel);
+            // ── resetNivel crea una nueva Regla con el nivel elegido ──
+            GameSession.getInstance().resetNivel(nivel);
             App.setRoot("BloqueAprenderRegla");
         } catch (IOException e) {
             e.printStackTrace();

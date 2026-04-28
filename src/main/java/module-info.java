@@ -3,7 +3,6 @@ module com.example {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
-    requires com.mysql.cj;
 
     opens com.example             to javafx.fxml, javafx.graphics;
     opens com.example.Controller  to javafx.fxml, javafx.base;

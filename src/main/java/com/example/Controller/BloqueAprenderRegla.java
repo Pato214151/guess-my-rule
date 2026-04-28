@@ -2,8 +2,8 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.AprenderRegla;
-import com.example.Model.AprenderRegla.ParInOut;
+import com.example.Model.Regla;
+import com.example.Model.Regla.ParInOut;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +24,7 @@ public class BloqueAprenderRegla {
     @FXML private TableColumn<ParInOut, String> colOut;
     @FXML private Label labelFeedback;
 
-    private AprenderRegla regla;
+    private Regla regla;
     private final ObservableList<ParInOut> filas = FXCollections.observableArrayList();
 
     private static final String[] TITULOS = {
@@ -32,37 +32,35 @@ public class BloqueAprenderRegla {
         "Nivel 1 - Find the Rule!",
         "Nivel 2 - Find the Rule!",
         "Nivel 3 - Find the Rule!",
-        "Nivel 4 - Find the Russssle!",
+        "Nivel 4 - Find the Rule!",
         "Nivel 5 - Find the Rule!",
         "Nivel 6 - Find the Rule!"
     };
 
-@FXML
-public void initialize() {
-    int nivel = GameSession.getInstance().getNivel();
-    regla = new AprenderRegla(nivel);
+    @FXML
+    public void initialize() {
+        regla = GameSession.getInstance().getRegla();
 
-    labelTitulo.setText(TITULOS[nivel]);
+        labelTitulo.setText(TITULOS[regla.getNivel()]);
 
-    colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
-    colOut.setCellValueFactory(new PropertyValueFactory<>("salida"));
-    tablaInOut.setItems(filas);
-    tablaInOut.setColumnResizePolicy(
-        TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
+        colOut.setCellValueFactory(new PropertyValueFactory<>("salida"));
+        tablaInOut.setItems(filas);
+        tablaInOut.setColumnResizePolicy(
+            TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-    // ✅ Cargar datos guardados correctamente
-List<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
-if (!guardadas.isEmpty()) {
-    filas.addAll(guardadas); // filas es ObservableList, addAll acepta List normal
-    GameSession.getInstance().setFilasGuardadas(new ArrayList<>());
-}
-
-    inputNumero.setOnKeyPressed(e -> {
-        if (e.getCode() == javafx.scene.input.KeyCode.ENTER) {
-            handleGo();
+        List<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
+        if (!guardadas.isEmpty()) {
+            filas.addAll(guardadas);
+            GameSession.getInstance().setFilasGuardadas(new ArrayList<>());
         }
-    });
-}
+
+        inputNumero.setOnKeyPressed(e -> {
+            if (e.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                handleGo();
+            }
+        });
+    }
 
     @FXML
     public void handleGo() {
@@ -76,28 +74,30 @@ if (!guardadas.isEmpty()) {
 
         try {
             double entrada = Double.parseDouble(texto);
-            filas.add(regla.evaluar(entrada));  // el modelo hace todo
+            filas.add(regla.evaluar(entrada));
             inputNumero.clear();
             inputNumero.requestFocus();
-
         } catch (NumberFormatException e) {
             labelFeedback.setText("Solo se permiten números.");
         }
     }
 
-@FXML
-public void handleDeclararRegla() {
-    // Conviertes ObservableList → List antes de guardar
-    GameSession.getInstance().setFilasGuardadas(new ArrayList<>(filas));
-    try {
-        App.setRoot("BloqueDeclararRegla");
-    } catch (IOException e) {
-        labelFeedback.setText("Error al navegar: " + e.getMessage());
+    @FXML
+    public void handleDeclararRegla() {
+        GameSession.getInstance().setFilasGuardadas(new ArrayList<>(filas));
+        try {
+            App.setRoot("BloqueDeclararRegla");
+        } catch (IOException e) {
+            labelFeedback.setText("Error al navegar: " + e.getMessage());
+        }
     }
-}
 
     @FXML
-    public void handleVolver() throws IOException {
-        App.setRoot("MenuSeleccionarNivel");
+    public void handleVolver() {
+        try {
+            App.setRoot("MenuSeleccionarNivel");
+        } catch (IOException e) {
+            labelFeedback.setText("Error al navegar: " + e.getMessage());
+        }
     }
 }

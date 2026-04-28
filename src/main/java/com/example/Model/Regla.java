@@ -1,13 +1,26 @@
 package com.example.Model;
 
-public class AprenderRegla {
+public class Regla {
 
+    // ── Estado del juego en curso ──────────────────────────────
     private final int nivel;
+    private int tiempo   = 0;
+    private int intentos = 0;
 
-    public AprenderRegla(int nivel) {
+    public Regla(int nivel) {
         this.nivel = nivel;
     }
 
+    // ── Getters / Setters de estado ────────────────────────────
+    public int getNivel()          { return nivel; }
+
+    public int getTiempo()         { return tiempo; }
+    public void setTiempo(int t)   { this.tiempo = t; }
+
+    public int getIntentos()       { return intentos; }
+    public void setIntentos(int i) { this.intentos = i; }
+
+    // ── Lógica matemática ──────────────────────────────────────
     public double aplicarRegla(double x) {
         return switch (nivel) {
             case 1 -> x + 3;
@@ -30,6 +43,12 @@ public class AprenderRegla {
         double salida = aplicarRegla(entrada);
         return new ParInOut(formatear(entrada), formatear(salida));
     }
+
+    public int calcularPuntaje() {
+        return Math.max(0, 1000 - (tiempo * 5) - (intentos * 50));
+    }
+
+    // ── Clase interna: fila tabla Find the Rule ────────────────
     public static class ParInOut {
         private final String entrada;
         private final String salida;
@@ -40,6 +59,6 @@ public class AprenderRegla {
         }
 
         public String getEntrada() { return entrada; }
-        public String getSalida()  { return salida;  }
+        public String getSalida()  { return salida; }
     }
 }

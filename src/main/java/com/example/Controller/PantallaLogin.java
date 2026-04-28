@@ -1,8 +1,5 @@
 package com.example.Controller;
 
-//CONTROLADOR DE LA PANTALLA DE REGISTRO DE JUGADOR,
-//  ES DECIR PANTALLAINICIALXML
-
 import java.io.IOException;
 
 import com.example.App;
@@ -47,17 +44,18 @@ public class PantallaLogin {
     }
 
     @FXML
-public void handleStart() {
-    if (currentPlayer != null) {
-        try {
-            GameSession.getInstance().setAlias(currentPlayer.getAlias());
-            App.setRoot("MenuSeleccionarNivel");
-        } catch (IOException e) {
-            showFeedback("Error al navegar: " + e.getMessage());
-            e.printStackTrace();
+    public void handleStart() {
+        if (currentPlayer != null) {
+            try {
+                // ── Pasa el objeto completo, no solo el alias ──
+                GameSession.getInstance().setJugador(currentPlayer);
+                App.setRoot("MenuSeleccionarNivel");
+            } catch (IOException e) {
+                showFeedback("Error al navegar: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
-}
 
     private void showFeedback(String message) {
         feedbackLabel.setText(message);

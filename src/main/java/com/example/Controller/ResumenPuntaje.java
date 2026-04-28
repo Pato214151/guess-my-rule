@@ -2,7 +2,8 @@ package com.example.Controller;
 
 import com.example.App;
 import com.example.Model.GameSession;
-import com.example.Model.PuntajeModel;
+import com.example.Model.Regla;
+import com.example.util.DAOPuntaje;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,21 +20,19 @@ public class ResumenPuntaje {
     @FXML
     public void initialize() {
         GameSession session = GameSession.getInstance();
+        Regla regla         = session.getRegla();
 
-        int nivel   = session.getNivel();
-        int puntaje = session.getPuntaje(); // corregido
-        int seg     = session.getTiempo();
-        int intentos = session.getIntentos();
-        String alias = session.getAlias();
+        int seg     = regla.getTiempo();
+        int puntaje = regla.calcularPuntaje();
+        int min     = seg / 60;
+        int s       = seg % 60;
 
-        int min = seg / 60;
-        int s   = seg % 60;
-
-        labelMensaje.setText("¡Felicidades, " + alias + "!");
+        labelMensaje.setText("¡Felicidades, " + session.getAlias() + "!");
         labelPuntaje.setText("Puntaje: " + puntaje + " pts");
         labelTiempo.setText(String.format("Tiempo: %02d:%02d", min, s));
 
-        boolean guardado = PuntajeModel.guardarPuntaje(alias, nivel, puntaje, intentos, seg);
+        DAOPuntaje dao = new DAOPuntaje();
+        boolean guardado = dao.create(session);
         if (guardado) {
             labelEstado.setStyle("-fx-text-fill: #1b5e20; -fx-font-size: 14px;");
             labelEstado.setText("Puntaje guardado en la base de datos.");
@@ -44,14 +43,11 @@ public class ResumenPuntaje {
     }
 
     @FXML
-public void handleMenuPrincipal() {
-    try {
-        GameSession.getInstance().setFilasGuardadas(
-            javafx.collections.FXCollections.observableArrayList());
-        GameSession.getInstance().setFilasTest(null);
-        App.setRoot("MenuSeleccionarNivel");
-    } catch (IOException e) {
-        e.printStackTrace();
+    public void handleMenuPrincipal() {
+        try {
+            App.setRoot("MenuSeleccionarNivel");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 }

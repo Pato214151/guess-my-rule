@@ -1,9 +1,9 @@
 package com.example.Controller;
 
 import com.example.App;
-import com.example.Model.DeclararRegla;
+import com.example.Model.FilaTest;
 import com.example.Model.GameSession;
-import com.example.Model.AprenderRegla;
+import com.example.Model.Regla;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,15 +27,13 @@ public class BloqueDeclararRegla {
     @FXML private Label labelTiempo;
     @FXML private Label labelIntentos;
     @FXML private Label labelFeedback;
-    @FXML private TableView<DeclararRegla> tablaTest;
-    @FXML private TableColumn<DeclararRegla, String> colIn;
-    @FXML private TableColumn<DeclararRegla, String> colOut;
+    @FXML private TableView<FilaTest> tablaTest;
+    @FXML private TableColumn<FilaTest, String> colIn;
+    @FXML private TableColumn<FilaTest, String> colOut;
 
-    private AprenderRegla regla;
-    private ObservableList<DeclararRegla> filas; // ✅ ObservableList solo en el Controller
+    private Regla regla;
+    private ObservableList<FilaTest> filas;
     private Timeline cronometro;
-    private int segundos = 0;
-    private int intentos = 0;
     private boolean yaVerificado = false;
 
     private static final String[] TITULOS = {
@@ -45,33 +43,32 @@ public class BloqueDeclararRegla {
 
     @FXML
     public void initialize() {
-        int nivel = GameSession.getInstance().getNivel();
-        regla = new AprenderRegla(nivel);
-        labelTitulo.setText(TITULOS[nivel] + " - Test Your Rule");
+        // ── Obtener regla desde GameSession ───────────────────
+        regla = GameSession.getInstance().getRegla();
+        labelTitulo.setText(TITULOS[regla.getNivel()] + " - Test Your Rule");
 
+        // ── Configurar columna In ──────────────────────────────
         colIn.setCellValueFactory(c -> c.getValue().entradaProperty());
-        colIn.setCellFactory(column -> {
-            TableCell<DeclararRegla, String> cell = new TableCell<>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        setText(item);
-                        setAlignment(Pos.CENTER);
-                        setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
-                    }
+        colIn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setAlignment(Pos.CENTER);
+                    setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
                 }
-            };
-            return cell;
+            }
         });
 
+        // ── Configurar columna Out editable ───────────────────
         colOut.setCellValueFactory(c -> c.getValue().respuestaProperty());
         tablaTest.setEditable(true);
         colOut.setEditable(true);
 
-        colOut.setCellFactory(column -> new TextFieldTableCell<DeclararRegla, String>(new DefaultStringConverter()) {
+        colOut.setCellFactory(column -> new TextFieldTableCell<FilaTest, String>(new DefaultStringConverter()) {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -87,7 +84,7 @@ public class BloqueDeclararRegla {
                     return;
                 }
 
-                DeclararRegla fila = getTableRow().getItem();
+                FilaTest fila = getTableRow().getItem();
                 try {
                     double resp = Double.parseDouble(item.trim());
                     if (Math.abs(resp - fila.getSalidaEsperada()) < 0.01) {
@@ -109,35 +106,33 @@ public class BloqueDeclararRegla {
 
         tablaTest.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        // ✅ Persistencia: List → ObservableList al cargar
-        List<DeclararRegla> guardadas = GameSession.getInstance().getFilasTest();
+        // ── Cargar filas: persistencia o nuevas ───────────────
+        List<FilaTest> guardadas = GameSession.getInstance().getFilasTest();
         if (guardadas != null) {
-            filas = FXCollections.observableArrayList(guardadas); // List → ObservableList
-            segundos = GameSession.getInstance().getTiempo();
-            intentos = GameSession.getInstance().getIntentos();
+            filas = FXCollections.observableArrayList(guardadas);
         } else {
             filas = FXCollections.observableArrayList();
             Random random = new Random();
             for (int i = 0; i < 5; i++) {
                 double entrada = random.nextInt(20) + 1;
                 double salida  = regla.aplicarRegla(entrada);
-                filas.add(new DeclararRegla(entrada, "", salida));
+                filas.add(new FilaTest(entrada, "", salida));
             }
-            segundos = 0;
-            intentos = 0;
         }
 
         tablaTest.setItems(filas);
-        labelIntentos.setText(String.valueOf(intentos));
-        labelTiempo.setText(segundos + " s");
+
+        // ── Restaurar estado del cronómetro e intentos ────────
+        labelIntentos.setText(String.valueOf(regla.getIntentos()));
+        labelTiempo.setText(regla.getTiempo() + " s");
 
         iniciarCronometro();
     }
 
     private void iniciarCronometro() {
         cronometro = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            segundos++;
-            labelTiempo.setText(segundos + " s");
+            regla.setTiempo(regla.getTiempo() + 1);
+            labelTiempo.setText(regla.getTiempo() + " s");
         }));
         cronometro.setCycleCount(Timeline.INDEFINITE);
         cronometro.play();
@@ -145,13 +140,13 @@ public class BloqueDeclararRegla {
 
     @FXML
     public void handleCheck() {
-        intentos++;
-        labelIntentos.setText(String.valueOf(intentos));
+        regla.setIntentos(regla.getIntentos() + 1);
+        labelIntentos.setText(String.valueOf(regla.getIntentos()));
         labelFeedback.setText("");
 
         boolean todosCorrecto = true;
 
-        for (DeclararRegla fila : filas) {
+        for (FilaTest fila : filas) {
             String respuestaTexto = fila.getRespuesta().trim();
             try {
                 double resp = Double.parseDouble(respuestaTexto);
@@ -169,15 +164,12 @@ public class BloqueDeclararRegla {
         if (todosCorrecto) {
             cronometro.stop();
 
-            int puntajeCalculado = Math.max(0, 1000 - (segundos * 5) - (intentos * 50));
+            // ── Puntaje se calcula en el modelo ───────────────
             GameSession session = GameSession.getInstance();
-            session.setPuntaje(puntajeCalculado);
-            session.setTiempo(segundos);
-            session.setIntentos(intentos);
-            session.setFilasTest(null); // ✅ null limpia la sesión
+            session.setFilasTest(null);
 
             labelFeedback.setStyle("-fx-font-size: 13px; -fx-text-fill: #2e7d32;");
-            labelFeedback.setText("Todo correcto!");
+            labelFeedback.setText("¡Todo correcto!");
 
             try {
                 App.setRoot("ResumenPuntaje");
@@ -187,7 +179,7 @@ public class BloqueDeclararRegla {
 
         } else {
             labelFeedback.setStyle("-fx-font-size: 13px; -fx-text-fill: #e53935;");
-            labelFeedback.setText("Hay respuestas incorrectas. intentanlo de nuevo!");
+            labelFeedback.setText("Hay respuestas incorrectas. ¡Inténtalo de nuevo!");
         }
     }
 
@@ -196,9 +188,7 @@ public class BloqueDeclararRegla {
         cronometro.stop();
 
         GameSession session = GameSession.getInstance();
-        session.setFilasTest(new ArrayList<>(filas)); // ✅ ObservableList → List al guardar
-        session.setTiempo(segundos);
-        session.setIntentos(intentos);
+        session.setFilasTest(new ArrayList<>(filas));
 
         try {
             App.setRoot("BloqueAprenderRegla");
