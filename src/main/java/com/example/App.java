@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -12,9 +13,11 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/Logoo.png")));
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/SIXTY.TTF"), 14);
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
 
