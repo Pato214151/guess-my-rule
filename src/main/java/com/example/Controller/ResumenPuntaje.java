@@ -1,9 +1,8 @@
 package com.example.Controller;
 
 import com.example.App;
+import com.example.DAO.DAOPuntaje;
 import com.example.Model.GameSession;
-import com.example.Model.Regla;
-import com.example.util.DAOPuntaje;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,9 +1,9 @@
 package com.example.Controller;
 
 import com.example.App;
+import com.example.DAO.DAOPuntaje;
 import com.example.Model.GameSession;
 import com.example.Model.Puntaje;
-import com.example.util.DAOPuntaje;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -7,9 +7,11 @@ module com.example {
     opens com.example             to javafx.fxml, javafx.graphics;
     opens com.example.Controller  to javafx.fxml, javafx.base;
     opens com.example.Model       to javafx.fxml;
-    opens com.example.util        to javafx.fxml;
+    opens com.example.DAO         to javafx.fxml;
+    opens com.example.exception   to javafx.fxml; 
 
     exports com.example;
     exports com.example.Controller;
     exports com.example.Model;
+    exports com.example.DAO;                 
 }

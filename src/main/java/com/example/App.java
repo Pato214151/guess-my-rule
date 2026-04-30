@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/Logoo.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/LogoFinal.png")));
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/SIXTY.TTF"), 14);
         Font.loadFont(getClass().getResourceAsStream("/com/example/fonts/Roboto-Regular.ttf"), 14);
 
