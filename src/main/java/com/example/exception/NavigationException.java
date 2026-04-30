@@ -1,4 +1,4 @@
-package com.example.util;
+package com.example.exception;
 
 public class NavigationException extends RuntimeException {
     public NavigationException(String message, Throwable cause) {

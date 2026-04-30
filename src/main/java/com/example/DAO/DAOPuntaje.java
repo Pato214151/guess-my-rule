@@ -1,4 +1,4 @@
-package com.example.util;
+package com.example.DAO;
 
 import com.example.Model.GameSession;
 import com.example.Model.Puntaje;
