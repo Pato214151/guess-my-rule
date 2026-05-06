@@ -21,39 +21,60 @@ public class PantallaLogin {
     private Jugador currentPlayer;
 
     @FXML
-    public void handleRegistrar() {
-        String alias = aliasField.getText();
-        if (alias == null || alias.trim().isEmpty()) {
-            showFeedback("⚠️ El alias no puede estar vacío");
-            return;
-        }
-        if (!alias.trim().matches("[a-zA-Z0-9]+")) {
-            showFeedback("⚠️ El alias solo puede contener letras y números");
-            return;
-        }
-        currentPlayer = new Jugador(alias.trim(), false);
-        btnStart.setDisable(false);
-        showFeedback("Alias registrado: " + currentPlayer.getAlias());
+    public void initialize() {
+        // Escucha cambios en el campo para habilitar/deshabilitar "Continuar" en tiempo real
+        aliasField.textProperty().addListener((observable, oldValue, newValue) -> {
+            boolean valido = newValue != null && !newValue.trim().isEmpty();
+            btnStart.setDisable(!valido);
+        });
+
+        // "Continuar" empieza deshabilitado hasta que haya texto válido
+        btnStart.setDisable(true);
+    }
+
+    @FXML
+    public void handleMostrarFormulario() {
+        // Oculta los botones de selección inicial
+        btnRegistrar.setVisible(false);
+        btnRegistrar.setManaged(false);
+        btnInvitado.setVisible(false);
+        btnInvitado.setManaged(false);
+
+        // Revela el formulario de usuario
+        aliasField.setVisible(true);
+        aliasField.setManaged(true);
+        btnStart.setVisible(true);
+        btnStart.setManaged(true);
+
+        aliasField.requestFocus();
     }
 
     @FXML
     public void handleInvitado() {
         currentPlayer = new Jugador("Invitado", true);
-        btnStart.setDisable(false);
-        showFeedback("Ingresando como Invitado");
+        navigateToMenu();
     }
 
     @FXML
     public void handleStart() {
-        if (currentPlayer != null) {
-            try {
-                // ── Pasa el objeto completo, no solo el alias ──
-                GameSession.getInstance().setJugador(currentPlayer);
-                App.setRoot("MenuSeleccionarNivel");
-            } catch (IOException e) {
-                showFeedback("Error al navegar: " + e.getMessage());
-                e.printStackTrace();
-            }
+        String alias = aliasField.getText();
+
+        if (alias == null || alias.trim().isEmpty()) {
+            showFeedback("⚠️ El nombre no puede estar vacío");
+            return;
+        }
+
+        currentPlayer = new Jugador(alias.trim(), false);
+        GameSession.getInstance().setJugador(currentPlayer);
+        navigateToMenu();
+    }
+
+    private void navigateToMenu() {
+        try {
+            App.setRoot("MenuSeleccionarNivel");
+        } catch (IOException e) {
+            showFeedback("Error al navegar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
