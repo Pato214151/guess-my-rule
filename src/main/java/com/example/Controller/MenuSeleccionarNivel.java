@@ -75,14 +75,15 @@ public class MenuSeleccionarNivel {
         return Integer.parseInt(valor.replace("Nivel ", "").trim());
     }
 
-    @FXML
-    public void handleVolver() {
-        try {
-            App.setRoot("PantallaLogin");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+@FXML
+public void handleVolver() {
+    try {
+        GameSession.getInstance().setJugador(null); // limpia el jugador actual
+        App.setRoot("PantallaLogin");
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @FXML
     public void handleNivel(ActionEvent event) {

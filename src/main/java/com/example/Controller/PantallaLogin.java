@@ -21,16 +21,28 @@ public class PantallaLogin {
     private Jugador currentPlayer;
 
     @FXML
-    public void initialize() {
-        // Escucha cambios en el campo para habilitar/deshabilitar "Continuar" en tiempo real
-        aliasField.textProperty().addListener((observable, oldValue, newValue) -> {
-            boolean valido = newValue != null && !newValue.trim().isEmpty();
-            btnStart.setDisable(!valido);
-        });
+public void initialize() {
+    aliasField.textProperty().addListener((observable, oldValue, newValue) -> {
+        // Restringe en tiempo real: máximo 10 caracteres y solo letras/números
+        if (newValue != null) {
+            String filtrado = newValue.replaceAll("[^a-zA-Z0-9]", ""); // elimina símbolos
+            if (filtrado.length() > 10) {
+                filtrado = filtrado.substring(0, 10);                  // corta al límite
+            }
+            // Solo actualiza si hubo cambio para evitar loop infinito del listener
+            if (!filtrado.equals(newValue)) {
+                aliasField.setText(filtrado);
+                aliasField.positionCaret(filtrado.length());           // mantiene el cursor al final
+            }
+        }
 
-        // "Continuar" empieza deshabilitado hasta que haya texto válido
-        btnStart.setDisable(true);
-    }
+        boolean valido = newValue != null && !newValue.trim().isEmpty();
+        btnStart.setDisable(!valido);
+    });
+
+    btnStart.setDisable(true);
+}
+
 
     @FXML
     public void handleMostrarFormulario() {
@@ -50,10 +62,11 @@ public class PantallaLogin {
     }
 
     @FXML
-    public void handleInvitado() {
-        currentPlayer = new Jugador("Invitado", true);
-        navigateToMenu();
-    }
+public void handleInvitado() {
+    currentPlayer = new Jugador("Invitado", true);
+    GameSession.getInstance().setJugador(currentPlayer); // ← agrega esta línea
+    navigateToMenu();
+}
 
     @FXML
     public void handleStart() {
