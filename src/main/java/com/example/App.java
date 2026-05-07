@@ -10,11 +10,29 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Punto de entrada principal de la aplicación JavaFX.
+ * <p>
+ * Extiende {@link javafx.application.Application} y gestiona la {@link Scene} global,
+ * la carga de tipografías personalizadas y la navegación entre pantallas mediante
+ * el método estático {@link #setRoot(String)}.
+ * </p>
+ */
 public class App extends Application {
 
     private static Scene scene;
-    
 
+
+    /**
+     * Inicializa la ventana principal de la aplicación.
+     * <p>
+     * Carga las tipografías SIXTY y Roboto, establece el icono de la ventana
+     * y muestra la pantalla inicial {@code PantallaLogin}.
+     * </p>
+     *
+     * @param stage el {@link Stage} principal proporcionado por el framework JavaFX
+     * @throws IOException si el archivo FXML de la pantalla inicial no se encuentra
+     */
     @Override
     public void start(Stage stage) throws IOException {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/LogoFinal.png")));
@@ -27,6 +45,13 @@ public class App extends Application {
     stage.show();
 }
 
+    /**
+     * Cambia la pantalla activa reemplazando el nodo raíz de la {@link Scene} global.
+     *
+     * @param fxml nombre del archivo FXML (sin extensión ni ruta) ubicado en
+     *             {@code /com/example/View/}
+     * @throws IOException si el archivo FXML no existe en el classpath
+     */
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -42,6 +67,11 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    /**
+     * Retorna la {@link Scene} global de la aplicación.
+     *
+     * @return la escena principal activa
+     */
     public static Scene getScene() {
         return scene;
     }

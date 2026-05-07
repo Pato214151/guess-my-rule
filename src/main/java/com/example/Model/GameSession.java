@@ -3,6 +3,14 @@ package com.example.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Singleton que mantiene el estado compartido de la sesión de juego.
+ * <p>
+ * Centraliza el {@link Jugador} activo, la {@link Regla} del nivel en curso,
+ * la {@link Partida} con sus métricas, y las listas de filas para preservar
+ * el historial de navegación entre pantallas.
+ * </p>
+ */
 public class GameSession {
 
     private static GameSession instance;
@@ -15,6 +23,11 @@ public class GameSession {
 
     private GameSession() {}
 
+    /**
+     * Retorna la única instancia de {@code GameSession}, creándola si aún no existe.
+     *
+     * @return instancia global de {@code GameSession}
+     */
     public static GameSession getInstance() {
         if (instance == null) instance = new GameSession();
         return instance;
@@ -40,6 +53,15 @@ public class GameSession {
     public List<FilaTest> getFilasTest()                      { return filasTest; }
     public void setFilasTest(List<FilaTest> filas)            { this.filasTest = filas; }
 
+    /**
+     * Reinicia el estado del nivel creando una nueva {@link Regla} y una nueva {@link Partida},
+     * y limpiando las listas de filas guardadas.
+     * <p>
+     * Debe llamarse desde {@code MenuSeleccionarNivel} cada vez que el jugador elige un nivel.
+     * </p>
+     *
+     * @param nuevoNivel número del nivel elegido (1–6)
+     */
     public void resetNivel(int nuevoNivel) {
         this.regla          = new Regla(nuevoNivel);
         this.partida        = new Partida();

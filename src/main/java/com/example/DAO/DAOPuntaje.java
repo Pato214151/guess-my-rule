@@ -7,8 +7,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO (Data Access Object) que encapsula todas las operaciones SQL sobre la tabla {@code puntajes}.
+ * <p>
+ * Implementa {@link CRUD}{@code <Puntaje, GameSession>}. Usa {@code PreparedStatement}
+ * en todas las consultas para prevenir inyección SQL. Los errores de base de datos
+ * se imprimen en {@code System.err} sin propagar la excepción, para que un fallo
+ * de conexión no detenga la aplicación.
+ * </p>
+ */
 public class DAOPuntaje implements CRUD<Puntaje, GameSession> {
 
+    /**
+     * Inserta un nuevo puntaje en la base de datos a partir de la sesión activa.
+     * <p>
+     * Aplica {@code Math.max(1, ...)} a intentos y tiempo para respetar los
+     * constraints {@code CHECK} de la tabla ({@code > 0}).
+     * </p>
+     *
+     * @param session sesión con los datos del jugador, nivel, tiempo e intentos
+     * @return {@code true} si la inserción fue exitosa; {@code false} si hubo error de BD
+     */
     @Override
     public boolean create(GameSession session) {
         int intentosSafe = Math.max(1, session.getIntentos());
@@ -57,6 +76,12 @@ public class DAOPuntaje implements CRUD<Puntaje, GameSession> {
         return obtenerRanking(0);
     }
 
+    /**
+     * Retorna hasta 50 registros del ranking ordenados por puntaje descendente.
+     *
+     * @param nivel nivel por el que filtrar (1–6), o {@code 0} para todos los niveles
+     * @return lista de {@link Puntaje} ordenada; puede estar vacía si no hay registros
+     */
     public List<Puntaje> obtenerRanking(int nivel) {
         List<Puntaje> lista = new ArrayList<>();
         String sql = (nivel == 0)

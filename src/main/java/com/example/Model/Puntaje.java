@@ -1,5 +1,12 @@
 package com.example.Model;
 
+/**
+ * Entidad inmutable que representa un registro de la tabla {@code puntajes} en la base de datos.
+ * <p>
+ * Los getters siguen la convención JavaBean para que {@code PropertyValueFactory}
+ * realice el binding automático con las columnas del ranking en {@code MenuSeleccionarNivel}.
+ * </p>
+ */
 public class Puntaje {
 
     private final String nombreJugador;

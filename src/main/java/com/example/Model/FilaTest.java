@@ -3,6 +3,14 @@ package com.example.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Representa una fila editable de la tabla de evaluación en {@code BloqueDeclararRegla}.
+ * <p>
+ * Usa {@link javafx.beans.property.StringProperty} para soportar binding bidireccional
+ * con la {@code TableView} editable de JavaFX. Los valores {@code entradaReal} y
+ * {@code salidaEsperada} son inmutables y se usan para verificar la respuesta del jugador.
+ * </p>
+ */
 public class FilaTest {
 
     private final double entradaReal;
