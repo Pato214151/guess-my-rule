@@ -4,10 +4,55 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.Controller.ResumenPuntaje"
-            style="-fx-background-color: #e8f5e9;">
+            fx:controller="com.example.Controller.ResumenPuntaje">
+
+       <Pane style="-fx-background-color: #d6d2d0;">
+        <Ellipse centerX="350" centerY="100" radiusX="300" radiusY="300"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="200" radiusY="200"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="150" radiusY="150"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="200" radiusY="200"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="100" radiusY="100"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="50" radiusY="50"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="400" radiusY="400"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="300" radiusY="300"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="250" radiusY="250"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+    </Pane>
 
     <center>
         <VBox alignment="CENTER" spacing="22" style="-fx-padding: 50;">
@@ -17,11 +62,11 @@
 
             <Label fx:id="labelMensaje"
                    text=""
-                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1b5e20;" />
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a237e;" />
 
             <Label fx:id="labelPuntaje"
                    text=""
-                   style="-fx-font-size: 22px; -fx-text-fill: #1a237e; -fx-font-weight: bold;" />
+                   style="-fx-font-size: 22px; -fx-text-fill: #3a4078; -fx-font-weight: bold;" />
 
             <Label fx:id="labelTiempo"
                    text=""

@@ -52,29 +52,29 @@ public class BloqueDeclararRegla {
         labelTitulo.setText(TITULOS[regla.getNivel()] + " - Test Your Rule");
 
         // ── ESTILO TABLA ──
-        tablaTest.setStyle(
-            "-fx-background-color: transparent;" +
-            "-fx-border-color: #c5cae9;" +
-            "-fx-border-radius: 10;" +
-            "-fx-background-radius: 10;" +
-            "-fx-border-width: 2;"
-        );
+tablaTest.setStyle(
+    "-fx-background-color: transparent;" +
+    "-fx-border-color: #c5cae9;" +
+    "-fx-border-radius: 10;" +
+    "-fx-background-radius: 10;" +
+    "-fx-border-width: 2;"
+);
 
-        tablaTest.setRowFactory(tv -> new TableRow<FilaTest>() {
-            @Override
-            protected void updateItem(FilaTest item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setStyle("-fx-background-color: transparent;");
-                } else {
-                    setStyle(getIndex() % 2 == 0
-                        ? "-fx-background-color: #e8eaf6;"
-                        : "-fx-background-color: #f0f2ff;"
-                    );
-                }
-            }
-        });
-        // ── FIN ESTILO TABLA ──
+tablaTest.setRowFactory(tv -> new TableRow<FilaTest>() {
+    @Override
+    protected void updateItem(FilaTest item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+            setStyle("-fx-background-color: transparent;");
+        } else {
+            setStyle(getIndex() % 2 == 0
+                ? "-fx-background-color: #e8eaf6;"
+                : "-fx-background-color: #f0f2ff;"
+            );
+        }
+    }
+});
+// ── FIN ESTILO TABLA ──
 
         // Columna IN — solo lectura
         colIn.setCellValueFactory(c -> c.getValue().entradaProperty());
@@ -107,10 +107,10 @@ public class BloqueDeclararRegla {
 
                 // Un solo clic enfoca el campo directamente
                 textField.setOnMouseClicked(event -> {
-                    textField.requestFocus();
-                    textField.selectAll();
-                    event.consume();
-                });
+    textField.requestFocus();
+    textField.selectAll();
+    event.consume();
+});
 
                 // Guarda al perder foco — sin necesidad de Enter
                 textField.focusedProperty().addListener((obs, wasFocused, isFocused) -> {

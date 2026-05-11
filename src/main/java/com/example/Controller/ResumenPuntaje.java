@@ -1,13 +1,13 @@
 package com.example.Controller;
 
+import java.io.IOException;
+
 import com.example.App;
 import com.example.DAO.DAOPuntaje;
 import com.example.Model.GameSession;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
-import java.io.IOException;
 
 public class ResumenPuntaje {
 
@@ -32,7 +32,7 @@ int puntaje = session.getPuntaje();
         DAOPuntaje dao = new DAOPuntaje();
         boolean guardado = dao.create(session);
         if (guardado) {
-            labelEstado.setStyle("-fx-text-fill: #1b5e20; -fx-font-size: 14px;");
+            labelEstado.setStyle("-fx-text-fill: #3a4078; -fx-font-size: 14px;");
             labelEstado.setText("Puntaje guardado en la base de datos.");
         } else {
             labelEstado.setStyle("-fx-text-fill: #e65100; -fx-font-size: 14px;");

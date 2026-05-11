@@ -112,27 +112,27 @@
 
                     <!-- Tabla -->
                     <TableView fx:id="tablaInOut"
-                   prefWidth="340" prefHeight="250"
-                   style="-fx-background-color: transparent;
-                          -fx-border-color: #c5cae9;
-                          -fx-border-width: 2;
-                          -fx-border-radius: 10;
-                          -fx-background-radius: 10;">
-        <columns>
-            <TableColumn fx:id="colIn"  text="In"  prefWidth="169"
-                         style="-fx-alignment: CENTER;
-                                -fx-font-size: 16px;
-                                -fx-font-weight: bold;" />
-            <TableColumn fx:id="colOut" text="Out" prefWidth="169"
-                         style="-fx-alignment: CENTER;
-                                -fx-font-size: 16px;
-                                -fx-font-weight: bold;" />
-        </columns>
-        <placeholder>
-            <Label text="Ingresa un número para comenzar"
-                   style="-fx-text-fill: #9fa8da; -fx-font-size: 13px;" />
-        </placeholder>
-    </TableView>
+           prefWidth="340" prefHeight="250"
+           style="-fx-background-color: transparent;
+                  -fx-border-color: #c5cae9;
+                  -fx-border-width: 2;
+                  -fx-border-radius: 10;
+                  -fx-background-radius: 10;">
+    <columns>
+        <TableColumn fx:id="colIn"  text="In"  prefWidth="169"
+                     style="-fx-alignment: CENTER;
+                            -fx-font-size: 16px;
+                            -fx-font-weight: bold;" />
+        <TableColumn fx:id="colOut" text="Out" prefWidth="169"
+                     style="-fx-alignment: CENTER;
+                            -fx-font-size: 16px;
+                            -fx-font-weight: bold;" />
+    </columns>
+    <placeholder>
+        <Label text="Ingresa un número para comenzar"
+               style="-fx-text-fill: #9fa8da; -fx-font-size: 13px;" />
+    </placeholder>
+</TableView>
 
                     <!-- Feedback -->
                     <Label fx:id="labelFeedback" text=""
