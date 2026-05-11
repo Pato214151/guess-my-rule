@@ -1,5 +1,9 @@
 package com.example.Controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.App;
 import com.example.Model.GameSession;
 import com.example.Model.Regla;
@@ -8,12 +12,13 @@ import com.example.Model.Regla.ParInOut;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BloqueAprenderRegla {
 
@@ -40,7 +45,6 @@ public class BloqueAprenderRegla {
     @FXML
     public void initialize() {
         regla = GameSession.getInstance().getRegla();
-
         labelTitulo.setText(TITULOS[regla.getNivel()]);
 
         colIn.setCellValueFactory(new PropertyValueFactory<>("entrada"));
@@ -48,6 +52,73 @@ public class BloqueAprenderRegla {
         tablaInOut.setItems(filas);
         tablaInOut.setColumnResizePolicy(
             TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
+        // ── ESTILO TABLA ──
+        tablaInOut.setStyle(
+            "-fx-background-color: transparent;" +
+            "-fx-border-color: #c5cae9;" +
+            "-fx-border-radius: 10;" +
+            "-fx-background-radius: 10;" +
+            "-fx-border-width: 2;"
+        );
+
+        tablaInOut.setRowFactory(tv -> new TableRow<ParInOut>() {
+            @Override
+            protected void updateItem(ParInOut item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setStyle("-fx-background-color: transparent;");
+                } else {
+                    setStyle(getIndex() % 2 == 0
+                        ? "-fx-background-color: #e8eaf6;"
+                        : "-fx-background-color: #f0f2ff;"
+                    );
+                }
+            }
+        });
+
+        colIn.setCellFactory(col -> new TableCell<ParInOut, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("-fx-background-color: transparent;");
+                } else {
+                    setText(item);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setStyle(
+                        "-fx-font-size: 16px; -fx-font-weight: bold;" +
+                        "-fx-text-fill: #1a237e;" +
+                        "-fx-border-color: #c5cae9;" +
+                        "-fx-border-width: 0 0 1 0;" +
+                        "-fx-background-color: transparent;"
+                    );
+                }
+            }
+        });
+
+        colOut.setCellFactory(col -> new TableCell<ParInOut, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("-fx-background-color: transparent;");
+                } else {
+                    setText(item);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                    setStyle(
+                        "-fx-font-size: 16px; -fx-font-weight: bold;" +
+                        "-fx-text-fill: #3f4e85;" +
+                        "-fx-border-color: #c5cae9;" +
+                        "-fx-border-width: 0 0 1 0;" +
+                        "-fx-background-color: transparent;"
+                    );
+                }
+            }
+        });
+        // ── FIN ESTILO TABLA ──
 
         List<ParInOut> guardadas = GameSession.getInstance().getFilasGuardadas();
         if (!guardadas.isEmpty()) {

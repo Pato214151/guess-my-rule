@@ -4,38 +4,104 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="20.0"
-      style="-fx-background-color: #78b3eb; -fx-font-family: 'Roboto';"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.Controller.PantallaLogin">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.Controller.PantallaLogin">
 
-    <Label fx:id="titleLabel" text="Guess My Rule"
-           style="-fx-font-family: 'SIXTY'; -fx-font-size: 74px; -fx-text-fill: #616161;"/>
+    <Pane style="-fx-background-color: #d6d2d0;">
+        <Ellipse centerX="350" centerY="100" radiusX="300" radiusY="300"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="200" radiusY="200"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="150" radiusY="150"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="200" radiusY="200"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="100" radiusY="100"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="50" radiusY="50"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="400" radiusY="400"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="300" radiusY="300"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="250" radiusY="250"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+    </Pane>
 
-    <Label fx:id="feedbackLabel" text=""
-           style="-fx-font-family: Roboto; -fx-font-size: 13px; -fx-text-fill: #4caf50;"/>
+    <VBox alignment="CENTER" spacing="20.0"
+          style="-fx-font-family: 'Roboto';">
 
-    <!-- Visible desde el inicio -->
-    <Button fx:id="btnRegistrar" text="Entrar con usuario" onAction="#handleMostrarFormulario"
-            style="-fx-background-color: #f5f5f5; -fx-text-fill: black; -fx-font-size: 14px;
-                   -fx-padding: 8 20 8 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+        <Label fx:id="titleLabel" text="Guess My Rule"
+               style="-fx-font-family: 'TEMBLORES'; -fx-font-size: 74px; -fx-text-fill: #ffffff;"/>
 
-    <Button fx:id="btnInvitado" text="Entrar como invitado" onAction="#handleInvitado"
-            style="-fx-background-color: #5eb1f5; -fx-text-fill: white; -fx-font-size: 14px;
-                   -fx-padding: 8 20 8 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+        <StackPane>
+            <Rectangle width="540" height="220"
+                       arcWidth="20" arcHeight="20"
+                       fill="black" opacity="0.25"/>
 
-    <!-- Ocultos inicialmente — managed="false" evita que ocupen espacio en el layout -->
-    <TextField fx:id="aliasField"
-               promptText="Ingrese su nombre"
-               prefWidth="200" maxWidth="250"
-               visible="false" managed="false"
-               style="-fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 14px;
-                      -fx-border-color: #64b5f6; -fx-border-radius: 8; -fx-border-width: 2;"/>
+            <HBox alignment="CENTER" spacing="40"
+                  style="-fx-padding: 30 50 30 50;">
 
-    <Button fx:id="btnStart" text="Continuar" onAction="#handleStart"
-            visible="false" managed="false"
-            style="-fx-background-color: #4dda40; -fx-text-fill: white; -fx-font-size: 14px;
-                   -fx-padding: 10 30 10 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                <VBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="Ingresa un alias"
+                    translateX="35"
+                    translateY="-1"
+                           style="-fx-font-size: 18px; -fx-text-fill: #ffffff;"/>
+                    <TextField fx:id="aliasField"
+                               promptText="Tu alias aquí"
+                               prefWidth="200"
+                               style="-fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 14px;
+                                      -fx-border-color: #19126b; -fx-border-radius: 8; -fx-border-width: 2;"/>
+                    <Label fx:id="feedbackLabel" text=""
+                           style="-fx-font-size: 14px; -fx-text-fill: #abace3;"/>
+                    <Button fx:id="btnStart" text="Start" disable="true" onAction="#handleStart"
+                    translateX="60"
+                            style="-fx-background-color: #3f4e85; -fx-text-fill: white; -fx-font-size: 20px;
+                                   -fx-padding: 10 30 10 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </VBox>
 
-</VBox>
+                <Label text="o"
+                        translateY="-64"
+                       style="-fx-font-size: 18px; -fx-text-fill: #ffffff;"/>
+
+                <VBox alignment="CENTER" spacing="8">
+                    <Label text="Entra como invitado"
+                    translateY="-41"
+                           style="-fx-font-size: 18px; -fx-text-fill: #ffffff;"/>
+                    <Button fx:id="btnInvitado" text="Ingresar como Invitado" onAction="#handleInvitado"
+                    translateY="-39"
+                            style="-fx-background-color: #3f4e85; -fx-text-fill: white; -fx-font-size: 16px;
+                                   -fx-padding: 8 20 8 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </VBox>
+
+            </HBox>
+        </StackPane>
+
+    </VBox>
+
+</StackPane>
