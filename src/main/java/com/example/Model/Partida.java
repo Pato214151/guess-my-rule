@@ -1,33 +1,29 @@
 package com.example.Model;
 
 /**
- * Registra las métricas de desempeño de la partida actual.
- * <p>
- * Almacena el tiempo transcurrido en segundos y el número de intentos realizados.
- * El puntaje se calcula penalizando tanto el tiempo como los intentos, incentivando
- * que el jugador piense antes de verificar.
- * </p>
+ * Registra el tiempo y los intentos de una partida,
+ * y calcula el puntaje final.
  */
 public class Partida {
 
     private int tiempo   = 0;
     private int intentos = 0;
 
+    /** @return tiempo transcurrido en segundos */
     public int getTiempo()         { return tiempo; }
+    /** @param t tiempo transcurrido en segundos */
     public void setTiempo(int t)   { this.tiempo = t; }
 
+    /** @return número de intentos realizados */
     public int getIntentos()       { return intentos; }
+    /** @param i número de intentos */
     public void setIntentos(int i) { this.intentos = i; }
 
     /**
-     * Calcula el puntaje final de la partida.
-     * <p>
-     * Fórmula: {@code max(0, 1000 - (tiempo × 5) - (intentos × 50))}.
-     * La penalización por intento es mayor que por segundo para incentivar
-     * la reflexión antes de verificar.
-     * </p>
+     * Calcula el puntaje con la fórmula {@code 1000 - (tiempo*5) - (intentos*50)},
+     * con un mínimo de 0.
      *
-     * @return puntaje calculado, nunca negativo
+     * @return puntaje obtenido en la partida
      */
     public int calcularPuntaje() {
         return Math.max(0, 1000 - (tiempo * 5) - (intentos * 50));

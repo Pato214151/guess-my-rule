@@ -3,34 +3,34 @@ package com.example.DAO;
 import java.util.List;
 
 /**
- * Interfaz genérica que define el contrato de acceso a datos.
+ * Interfaz genérica de operaciones CRUD básicas sobre un repositorio.
  *
- * @param <T> tipo de la entidad retornada (p. ej. {@code Puntaje})
- * @param <I> tipo del objeto de entrada para creación (p. ej. {@code GameSession})
+ * @param <T> tipo de entidad que devuelven las operaciones de lectura
+ * @param <I> tipo de entrada que recibe la operación de creación
  */
 public interface CRUD<T, I> {
 
     /**
-     * Persiste un nuevo registro a partir del objeto de entrada.
+     * Persiste una nueva entidad a partir del objeto de entrada.
      *
-     * @param input objeto con los datos a persistir
-     * @return {@code true} si la operación fue exitosa; {@code false} en caso contrario
+     * @param input datos necesarios para crear el registro
+     * @return {@code true} si la operación fue exitosa
      */
     boolean create(I input);
 
     /**
-     * Busca y retorna un único registro por su identificador.
+     * Recupera una entidad por su identificador.
      *
      * @param <K> tipo del identificador
      * @param id  valor del identificador
-     * @return la entidad encontrada, o {@code null} si no existe
+     * @return entidad encontrada, o {@code null} si no existe
      */
     <K> T readOne(K id);
 
     /**
-     * Retorna todos los registros disponibles.
+     * Recupera todas las entidades del repositorio.
      *
-     * @return lista con todas las entidades; puede estar vacía pero nunca es {@code null}
+     * @return lista con todos los registros disponibles
      */
     List<T> readAll();
 }

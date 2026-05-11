@@ -1,14 +1,17 @@
 package com.example.exception;
 
 /**
- * Excepción no verificada que envuelve errores de navegación entre pantallas.
- * <p>
- * Al extender {@link RuntimeException}, los manejadores {@code @FXML} no necesitan
- * declarar {@code throws} para propagarla, manteniendo el código de navegación limpio.
- * Preserva la causa original para facilitar el diagnóstico.
- * </p>
+ * Excepción no verificada que se lanza cuando ocurre un error
+ * durante la navegación entre pantallas FXML.
  */
 public class NavigationException extends RuntimeException {
+
+    /**
+     * Crea la excepción con un mensaje descriptivo y la causa original.
+     *
+     * @param message descripción del error de navegación
+     * @param cause   excepción original que originó el fallo
+     */
     public NavigationException(String message, Throwable cause) {
         super(message, cause);
     }

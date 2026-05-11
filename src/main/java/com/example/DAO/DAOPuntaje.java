@@ -8,25 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO (Data Access Object) que encapsula todas las operaciones SQL sobre la tabla {@code puntajes}.
- * <p>
- * Implementa {@link CRUD}{@code <Puntaje, GameSession>}. Usa {@code PreparedStatement}
- * en todas las consultas para prevenir inyección SQL. Los errores de base de datos
- * se imprimen en {@code System.err} sin propagar la excepción, para que un fallo
- * de conexión no detenga la aplicación.
- * </p>
+ * Acceso a datos para la entidad {@link Puntaje}.
+ * Implementa {@link CRUD} usando {@link GameSession} como fuente de los datos a insertar.
  */
 public class DAOPuntaje implements CRUD<Puntaje, GameSession> {
 
     /**
-     * Inserta un nuevo puntaje en la base de datos a partir de la sesión activa.
-     * <p>
-     * Aplica {@code Math.max(1, ...)} a intentos y tiempo para respetar los
-     * constraints {@code CHECK} de la tabla ({@code > 0}).
-     * </p>
+     * Inserta el puntaje de la sesión actual en la tabla {@code puntajes}.
      *
-     * @param session sesión con los datos del jugador, nivel, tiempo e intentos
-     * @return {@code true} si la inserción fue exitosa; {@code false} si hubo error de BD
+     * @param session sesión activa con alias, puntaje, nivel, intentos y tiempo
+     * @return {@code true} si la inserción fue exitosa
      */
     @Override
     public boolean create(GameSession session) {
@@ -50,6 +41,13 @@ public class DAOPuntaje implements CRUD<Puntaje, GameSession> {
         }
     }
 
+    /**
+     * Recupera un puntaje por su ID en la base de datos.
+     *
+     * @param <K> tipo del identificador (generalmente {@code Integer})
+     * @param id  identificador del registro
+     * @return objeto {@link Puntaje} si existe, {@code null} en caso contrario
+     */
     @Override
     public <K> Puntaje readOne(K id) {
         String sql = "SELECT * FROM puntajes WHERE id = ?";
@@ -71,16 +69,21 @@ public class DAOPuntaje implements CRUD<Puntaje, GameSession> {
         return null;
     }
 
+    /**
+     * Devuelve los 50 mejores puntajes globales sin filtrar por nivel.
+     *
+     * @return lista de {@link Puntaje} ordenada de mayor a menor
+     */
     @Override
     public List<Puntaje> readAll() {
         return obtenerRanking(0);
     }
 
     /**
-     * Retorna hasta 50 registros del ranking ordenados por puntaje descendente.
+     * Devuelve los 50 mejores puntajes, opcionalmente filtrados por nivel.
      *
-     * @param nivel nivel por el que filtrar (1–6), o {@code 0} para todos los niveles
-     * @return lista de {@link Puntaje} ordenada; puede estar vacía si no hay registros
+     * @param nivel nivel a filtrar; pasar {@code 0} para obtener el ranking global
+     * @return lista de {@link Puntaje} ordenada de mayor a menor puntaje
      */
     public List<Puntaje> obtenerRanking(int nivel) {
         List<Puntaje> lista = new ArrayList<>();
