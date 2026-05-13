@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.effect.GaussianBlur?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.Controller.BloqueAprenderRegla">
+
+    <!-- FONDO: elipses -->
+    <Pane style="-fx-background-color: #d6d2d0;">
+        <Ellipse centerX="350" centerY="100" radiusX="300" radiusY="300"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="200" radiusY="200"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="350" centerY="100" radiusX="150" radiusY="150"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="200" radiusY="200"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="100" radiusY="100"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="1200" centerY="350" radiusX="50" radiusY="50"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="400" radiusY="400"
+                 fill="#092483" opacity="1.0">
+            <effect><GaussianBlur radius="500"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="300" radiusY="300"
+                 fill="#081f71" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+        <Ellipse centerX="700" centerY="1000" radiusX="250" radiusY="250"
+                 fill="#071b61" opacity="0.9">
+            <effect><GaussianBlur radius="80"/></effect>
+        </Ellipse>
+    </Pane>
+
+    <BorderPane style="-fx-background-color: transparent; -fx-font-family: Roboto;">
+
+        <top>
+            <HBox alignment="CENTER_LEFT" spacing="20"
+                  style="-fx-padding: 15 30 15 30; -fx-background-color: transparent;">
+                <Button text="←" onAction="#handleVolver"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: #ffffff;
+                               -fx-font-size: 30px;
+                               -fx-cursor: hand;" />
+                <Label fx:id="labelTitulo"
+                       text="Nivel 1 - Find the Rule!"
+                       style="-fx-font-size: 30px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #ffffff;" />
+            </HBox>
+        </top>
+
+        <center>
+            <VBox alignment="CENTER" spacing="20"
+                  style="-fx-padding: 10 30 30 30;">
+
+                <!-- CARD -->
+                <VBox alignment="CENTER" spacing="20"
+                      prefWidth="420" maxWidth="420"
+                      style="-fx-background-color: #f0f2ff;
+                             -fx-background-radius: 16;
+                             -fx-border-color: #c5cae9;
+                             -fx-border-radius: 16;
+                             -fx-border-width: 1.5;
+                             -fx-padding: 30 40 30 40;">
+
+                    <!-- Input -->
+                    <HBox alignment="CENTER" spacing="12">
+                        <TextField fx:id="inputNumero"
+                                   promptText="Ingresa un número"
+                                   prefWidth="150"
+                                   style="-fx-font-size: 16px;
+                                          -fx-padding: 8;
+                                          -fx-background-radius: 8;
+                                          -fx-border-color: #9fa8da;
+                                          -fx-border-radius: 8;
+                                          -fx-border-width: 2;
+                                          -fx-background-color: white;" />
+                        <Button text="Go!" onAction="#handleGo"
+                                style="-fx-background-color: #3f4e85;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 16px;
+                                       -fx-font-weight: bold;
+                                       -fx-padding: 8 22 8 22;
+                                       -fx-background-radius: 8;
+                                       -fx-cursor: hand;" />
+                    </HBox>
+
+                    <!-- Tabla -->
+                    <TableView fx:id="tablaInOut"
+           prefWidth="340" prefHeight="250"
+           style="-fx-background-color: transparent;
+                  -fx-border-color: #c5cae9;
+                  -fx-border-width: 2;
+                  -fx-border-radius: 10;
+                  -fx-background-radius: 10;">
+    <columns>
+        <TableColumn fx:id="colIn"  text="In"  prefWidth="169"
+                     style="-fx-alignment: CENTER;
+                            -fx-font-size: 16px;
+                            -fx-font-weight: bold;" />
+        <TableColumn fx:id="colOut" text="Out" prefWidth="169"
+                     style="-fx-alignment: CENTER;
+                            -fx-font-size: 16px;
+                            -fx-font-weight: bold;" />
+    </columns>
+    <placeholder>
+        <Label text="Ingresa un número para comenzar"
+               style="-fx-text-fill: #9fa8da; -fx-font-size: 13px;" />
+    </placeholder>
+</TableView>
+
+                    <!-- Feedback -->
+                    <Label fx:id="labelFeedback" text=""
+                           style="-fx-font-size: 14px; -fx-text-fill: #e53935;" />
+
+                    <!-- Botón declarar -->
+                    <Button text="I think I know the rule!"
+                            onAction="#handleDeclararRegla"
+                            style="-fx-background-color: #3f4e85;
+                                   -fx-text-fill: white;
+                                   -fx-font-size: 16px;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 10 28 10 28;
+                                   -fx-background-radius: 20;
+                                   -fx-cursor: hand;" />
+
+                </VBox>
+            </VBox>
+        </center>
+
+    </BorderPane>
+
+</StackPane>

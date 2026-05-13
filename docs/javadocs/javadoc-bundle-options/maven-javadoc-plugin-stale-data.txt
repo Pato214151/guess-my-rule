@@ -1,0 +1,52 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+@argfile
+--no-fonts
+--class-path
+'C:/Users/gabri/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21.jar;C:/Users/gabri/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21.jar;C:/Users/gabri/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21.jar;C:/Users/gabri/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21.jar;C:/Users/gabri/.m2/repository/com/mysql/mysql-connector-j/8.3.0/mysql-connector-j-8.3.0.jar;C:/Users/gabri/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar'
+--module-path
+'C:/Users/gabri/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21-win.jar;C:/Users/gabri/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21-win.jar;C:/Users/gabri/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21-win.jar;C:/GuessMyRule/guess-my-rule/target/classes;C:/Users/gabri/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21-win.jar'
+--patch-module
+com.example='C:/GuessMyRule/guess-my-rule/src/main/java'
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+--module-source-path
+'C:/GuessMyRule/guess-my-rule/target/reports/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/GuessMyRule/guess-my-rule/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'demo 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'demo 1.0-SNAPSHOT API'
+com.example
+com.example.Controller
+com.example.DAO
+com.example.Model
+'C:/GuessMyRule/guess-my-rule/src/main/java/module-info.java'
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\allclasses-index.html = 1778569033592
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\allpackages-index.html = 1778569033596
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\element-list = 1778569033198
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\help-doc.html = 1778569033654
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\index-all.html = 1778569033642
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\index.html = 1778569033649
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\member-search-index.js = 1778569033605
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\module-search-index.js = 1778569033599
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\overview-tree.html = 1778569033562
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\package-search-index.js = 1778569033601
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\search.html = 1778569033646
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\tag-search-index.js = 1778569033607
+C:\GuessMyRule\guess-my-rule\target\reports\apidocs\type-search-index.js = 1778569033603
